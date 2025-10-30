@@ -11,7 +11,7 @@ class EDA:
     
     def eda(self):
         
-        file_path = "../Data/sentimentaldataset.csv"
+        file_path = "Data/sentimentdataset.csv"
 
         
         if os.path.exists(file_path):
