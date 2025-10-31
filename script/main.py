@@ -93,6 +93,12 @@ class info_insights(CSS):
         
     def eda(self):
         pass
+
+class ML(info_insights):
+    
+    def ml(self):
+        
+        pass
         
             
 class App(info_insights):
