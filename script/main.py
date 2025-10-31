@@ -52,7 +52,7 @@ class CSS:
         """, unsafe_allow_html=True)
            
          
-class EDA(CSS):
+class info_insights(CSS):
     
     def info(self):
         
@@ -95,7 +95,7 @@ class EDA(CSS):
         pass
         
             
-class App(EDA):
+class App(info_insights):
     
     def run_info(self):
         
