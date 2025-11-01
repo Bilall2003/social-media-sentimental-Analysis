@@ -45,8 +45,6 @@ class CSS:
                 text-align: center;
                 font-size: 20px;
                 font-weight: 400;
-                # margin-lef
-                
             }
      
             </style>
@@ -104,14 +102,6 @@ class info_insights(CSS):
         
         
     def eda(self):
-        pass
-
-class ML(info_insights):
-    
-    
-    def ml(self):
-        
-        st.set_page_config(layout="wide")
         data=self.df[["Text","Sentiment"]]
         
         X=data["Text"]
@@ -125,15 +115,53 @@ class ML(info_insights):
         
         voc=tf_idf.vocabulary_
         
+        form_adjust="""
+            <style>
+            section[data-testid="stSidebar"] div[data-testid="stSidebarContent"] {
+                margin-top: 150px;
+                text-align: center;
+                padding: 0.5px;
+            }
+            </style>
+            """
+        st.write(form_adjust,unsafe_allow_html=True)
+
         
         with st.sidebar.form(key="search_form"):
             
             st.subheader("Search Parameters")
-            voc_sel=st.selectbox("choose",voc)
+            
+            voc_sel=st.selectbox("Choose Vocabulary", voc,key="voc_select")
             text_sel=st.slider("Number of texts", min_value=100, max_value=735, key="num_tweets")
             
-            if st.form_submit_button("Search"):
-                pass
+            submitted=st.form_submit_button("Search")
+            
+            st.markdown("Note: It may take a while to load results,especially with large number of texts")
+            
+        if submitted:
+            col1,col2=st.columns(2,gap="large")
+            
+            with col1:
+                st.info(voc_sel)
+            with col2:
+                st.warning(text_sel)
+                
+                
+            col3,col4=st.columns(2,gap="large")
+            
+            with col3:
+                st.info(voc_sel)
+            with col4:
+                st.warning(text_sel)
+                
+
+class ML(info_insights):
+    
+    
+    def ml(self):
+        
+        pass
+
                 
 class App(ML):
     
