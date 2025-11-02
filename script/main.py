@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 import streamlit as st
 import os
+import time
 import logging
+import re
+from collections import Counter
 from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
 
 
@@ -126,7 +129,6 @@ class info_insights(CSS):
             """
         st.write(form_adjust,unsafe_allow_html=True)
 
-        
         with st.sidebar.form(key="search_form"):
             
             st.subheader("Search Parameters")
@@ -138,19 +140,21 @@ class info_insights(CSS):
             
             st.markdown("Note: It may take a while to load results,especially with large number of texts")
             
+            st.set_page_config(layout="wide")
+            
         if submitted:
             
-            col1,col2=st.columns((1.5,1),gap="large")
+            col1,col2=st.columns([8,13],gap="large")
             
             with col1:
                 filtered = data[data["Text"].str.contains(voc_sel, case=False, na=False)][["Text", "Sentiment"]]
                 sentiment_counts = filtered["Sentiment"].value_counts()
                 
                 if not filtered.empty:
-                    st.subheader(f"Sentiment distribution for '{voc_sel}'")
+                    st.subheader(f"Sentiment distribution")
 
                     # --- Create Pie Chart
-                    fig, ax = plt.subplots(figsize=(15, 6),dpi=200)
+                    fig, ax = plt.subplots(figsize=(20, 6),dpi=50)
                     ax.pie(
                         sentiment_counts,
                         labels=sentiment_counts.index,
@@ -166,12 +170,33 @@ class info_insights(CSS):
                     st.warning(f"No sentences found containing '{voc_sel}'.")
 
             with col2:
-                pass
+
+                # Combine all text into one long string
+                text = " ".join(filtered["Text"].astype(str).tolist())
+
+                # Clean text: remove punctuation and lowercase
+                text = re.sub(r"[^\w\s]", "", text.lower())
+
+                words = text.split()
+                word_counts = Counter(words)
+                top_10 = word_counts.most_common(10)
                 
+                df_10=pd.DataFrame(top_10,columns=["Word","Count"])
+                
+                st.subheader(f"Top 10 Occuring Words")
+                fig1,ax1=plt.subplots(figsize=(20,10))
+                sns.barplot(x="Word",y="Count",data=df_10,color="green",ax=ax1)
+                plt.xlabel("vdfvnl")
+                plt.tight_layout()
+                st.pyplot(fig1)
+                
+                
+
+
             col3,col4=st.columns(2,gap="large")
             
             with col3:
-                
+                st.subheader(f"Number of Texts")
                 if len(filtered)>=text_sel:
                 
                     st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
@@ -190,7 +215,7 @@ class ML(info_insights):
         self.css()
         st.markdown("<h2 class='gradient-text'>🧠Sentiment Analysis with Transformers</h2>",unsafe_allow_html=True)
         
-        st.text_area(label="Enter your text",label_visibility="collapsed",placeholder="Enter your text")
+        user_text=st.text_area(label="Enter your text",label_visibility="collapsed",placeholder="Enter your text")
         
         st.markdown("""
             <style>
@@ -217,9 +242,19 @@ class ML(info_insights):
         but_sel = st.button("Analyze Sentiment")
 
         if but_sel:
-            st.spinner("Analyzing...")
-            st.success("Analysis complete!")
-                
+            
+           with st.status("Analyzing.....", expanded=True) as status:
+                st.write("Checking text...")
+                time.sleep(2)
+
+                st.write("Collecting information...")
+                time.sleep(5)
+
+                st.write("Running sentiment model...")
+                time.sleep(5)
+
+                status.update(label="✅ Analysis complete!", state="complete")
+                            
 class App(ML):
     
     def run_info(self):
