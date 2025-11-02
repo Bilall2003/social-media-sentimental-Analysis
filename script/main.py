@@ -9,6 +9,7 @@ import logging
 from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
 
 
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -131,7 +132,7 @@ class info_insights(CSS):
             st.subheader("Search Parameters")
             
             voc_sel=st.selectbox("Choose Vocabulary", voc,key="voc_select")
-            text_sel=st.slider("Number of texts", min_value=10, max_value=735, key="num_tweets")
+            text_sel=st.slider("Number of texts", min_value=5, max_value=735, key="num_tweets")
             
             submitted=st.form_submit_button("Search")
             
@@ -171,7 +172,13 @@ class info_insights(CSS):
             
             with col3:
                 
-                st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
+                if len(filtered)>=text_sel:
+                
+                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
+                    
+                else :
+                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
+                    st.warning(f"This vocabulary has not much text you selected : {text_sel}")
             with col4:
                 st.warning(text_sel)
                 
@@ -180,9 +187,38 @@ class ML(info_insights):
     
     
     def ml(self):
+        self.css()
+        st.markdown("<h2 class='gradient-text'>🧠Sentiment Analysis with Transformers</h2>",unsafe_allow_html=True)
         
-        pass
+        st.text_area(label="Enter your text",label_visibility="collapsed",placeholder="Enter your text")
+        
+        st.markdown("""
+            <style>
+            div.stButton > button:first-child {
+                width: 100%;
+                background: linear-gradient(grey, pink, purple);
+                font-weight: 700;
+                cursor: pointer;
+                border: none;
+                color: black;
+                padding: 1px 300px;
+                border-radius: 5px;
+                transition: all 0.3s ease;
+                font-size: 20px;
+            }
 
+            div.stButton > button:first-child:hover {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+
+        but_sel = st.button("Analyze Sentiment")
+
+        if but_sel:
+            st.spinner("Analyzing...")
+            st.success("Analysis complete!")
                 
 class App(ML):
     
@@ -204,8 +240,8 @@ class App(ML):
     def app(self):
         
         options={"OverView":self.run_info,
-                "Insights📊": self.run_eda,
-                 "Sentiment Analyzer🔎":self.run_ml}
+                "Insights": self.run_eda,
+                 "Sentiment Analyzer":self.run_ml}
         
         st.markdown("""
             <style>
