@@ -102,16 +102,15 @@ class info_insights(CSS):
         
         
     def eda(self):
+        
         data=self.df[["Text","Sentiment"]]
         
         X=data["Text"]
         y=data["Sentiment"]
         
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
         
         tf_idf=TfidfVectorizer(stop_words="english")
-        x_train_vec=tf_idf.fit_transform(X_train)
-        x_test_vec=tf_idf.transform(X_test)
+        x_vec=tf_idf.fit_transform(X)
         
         voc=tf_idf.vocabulary_
         
@@ -132,25 +131,47 @@ class info_insights(CSS):
             st.subheader("Search Parameters")
             
             voc_sel=st.selectbox("Choose Vocabulary", voc,key="voc_select")
-            text_sel=st.slider("Number of texts", min_value=100, max_value=735, key="num_tweets")
+            text_sel=st.slider("Number of texts", min_value=10, max_value=735, key="num_tweets")
             
             submitted=st.form_submit_button("Search")
             
             st.markdown("Note: It may take a while to load results,especially with large number of texts")
             
         if submitted:
-            col1,col2=st.columns(2,gap="large")
+            
+            col1,col2=st.columns((1.5,1),gap="large")
             
             with col1:
-                st.info(voc_sel)
-            with col2:
-                st.warning(text_sel)
+                filtered = data[data["Text"].str.contains(voc_sel, case=False, na=False)][["Text", "Sentiment"]]
+                sentiment_counts = filtered["Sentiment"].value_counts()
                 
+                if not filtered.empty:
+                    st.subheader(f"Sentiment distribution for '{voc_sel}'")
+
+                    # --- Create Pie Chart
+                    fig, ax = plt.subplots(figsize=(15, 6),dpi=200)
+                    ax.pie(
+                        sentiment_counts,
+                        labels=sentiment_counts.index,
+                        autopct='%1.1f%%',
+                        startangle=90,
+                        wedgeprops={'edgecolor': 'black'},
+                        shadow=True
+                    )
+                    plt.tight_layout()
+                    st.pyplot(fig)
+
+                else:
+                    st.warning(f"No sentences found containing '{voc_sel}'.")
+
+            with col2:
+                pass
                 
             col3,col4=st.columns(2,gap="large")
             
             with col3:
-                st.info(voc_sel)
+                
+                st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
             with col4:
                 st.warning(text_sel)
                 
