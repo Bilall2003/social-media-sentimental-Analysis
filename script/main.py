@@ -9,6 +9,7 @@ import time
 import logging
 import re
 from collections import Counter
+from wordcloud import WordCloud
 from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
 
 
@@ -205,8 +206,21 @@ class info_insights(CSS):
                     st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
                     st.warning(f"This vocabulary has not much text you selected : {text_sel}")
             with col4:
-                st.warning(text_sel)
-                
+                wordcloud = WordCloud(
+                width=800,
+                height=400,
+                background_color="white",
+                colormap="Greens",     # try 'viridis', 'inferno', 'cool', etc.
+                max_words=100
+            ).generate(text)
+
+            # Display it in Streamlit
+            st.subheader("Word Cloud of Text Data")
+            fig, ax = plt.subplots()
+            ax.imshow(wordcloud, interpolation='bilinear')
+            ax.axis("off")
+            st.pyplot(fig)
+                                            
 
 class ML(info_insights):
     
