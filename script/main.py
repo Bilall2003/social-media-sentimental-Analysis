@@ -260,11 +260,11 @@ class ML(info_insights):
 
         if but_sel:
             
-           with st.status("Analyzing.....", expanded=True) as status:
+            with st.status("Analyzing.....", expanded=True) as status:
                 st.write("Checking text...")
                 time.sleep(2)
 
-                st.write("Collecting information...")
+                st.write("Fetching information...")
                 time.sleep(5)
 
                 st.write("Running sentiment model...")
