@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
 import streamlit as st
 import os
@@ -191,10 +192,8 @@ class info_insights(CSS):
                 plt.tight_layout()
                 st.pyplot(fig1)
                 
-                
 
-
-            col3,col4=st.columns(2,gap="large")
+            col3,col4=st.columns([1,2],gap="large")
             
             with col3:
                 st.subheader(f"Number of Texts")
@@ -205,21 +204,25 @@ class info_insights(CSS):
                 else :
                     st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
                     st.warning(f"This vocabulary has not much text you selected : {text_sel}")
+                    
             with col4:
                 wordcloud = WordCloud(
-                width=800,
-                height=400,
                 background_color="white",
-                colormap="Greens",     # try 'viridis', 'inferno', 'cool', etc.
-                max_words=100
-            ).generate(text)
+                max_words=90,
+                colormap="Greens",
+                random_state=42,
+                collocations=False,
+                min_word_length=2,
+                max_font_size=250,
+            ).generate(str(words))
 
             # Display it in Streamlit
-            st.subheader("Word Cloud of Text Data")
-            fig, ax = plt.subplots()
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis("off")
-            st.pyplot(fig)
+                st.subheader("Word Cloud of Text Data")
+                fig, ax = plt.subplots(figsize=(2,4))
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                plt.tight_layout()
+                st.pyplot(fig)
                                             
 
 class ML(info_insights):
