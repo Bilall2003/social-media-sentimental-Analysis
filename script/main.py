@@ -271,6 +271,20 @@ class ML(info_insights):
                 time.sleep(5)
 
                 status.update(label="✅ Analysis complete!", state="complete")
+                
+        data=self.df[["Text","Sentiment"]]
+        
+        X=data["Text"]
+        y=data["Sentiment"]
+        
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+        tf_idf=TfidfVectorizer(stop_words="english")
+        x_train_vec=tf_idf.fit_transform(X_train)
+        x_test_vec=tf_idf.fit_transform(X_test)
+        
+        st.write(tf_idf.vocabulary_)
+                
+            
                             
 class App(ML):
     
