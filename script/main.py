@@ -265,11 +265,11 @@ class ML(info_insights):
 
         but_sel = st.button("Analyze Sentiment")
 
-        if but_sel:
+        if but_sel and len(user_text)>0:
             
             with st.status("Analyzing.....", expanded=True) as status:
                 st.write("Checking text...")
-                time.sleep(2)
+                time.sleep(5)
 
                 st.write("Fetching information...")
                 time.sleep(5)
@@ -279,94 +279,58 @@ class ML(info_insights):
 
                 status.update(label="✅ Analysis complete!", state="complete")
                 
-        data=self.df[["Text","Sentiment"]]
-        
-        X=data["Text"]
-        y=data["Sentiment"]
-        
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
-        tf_idf=TfidfVectorizer(stop_words="english")
-        x_train_vec=tf_idf.fit_transform(X_train)
-        x_test_vec=tf_idf.transform(X_test)
-        
-        # def ml_report(model_name):
-        #     model_name.fit(x_train_vec,y_train)
-        #     pred=model_name.predict(x_test_vec)
+            data=self.df[["Text","Sentiment"]]
             
-        #     cr=classification_report(y_test,pred)
-        #     acc=accuracy_score(y_test,pred)
+            X=data["Text"]
+            y=data["Sentiment"]
             
-        #     st.text(acc)
-        #     # st.write(cr)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+            tf_idf=TfidfVectorizer(stop_words="english")
+            x_train_vec=tf_idf.fit_transform(X_train)
+            x_test_vec=tf_idf.transform(X_test)
             
-        # ml_report(KNeighborsClassifier())
-        operation = Pipeline([
-            ("tfidf", TfidfVectorizer(stop_words='english')),
-            ("model", SVC())
-        ])
-        
-        # para={
-        #     "model__n_neighbors": range(1,30),
-        #     "model__metric":["euclidean","minowski"]
-        # }
-        para={"model__kernel":["linear","rbf"],
-        "model__C":np.logspace(0,2,10)}
-        
-        grid_model=GridSearchCV(estimator=operation,param_grid=para,cv=5,scoring="accuracy",n_jobs=-1,verbose=1)
-        
-        grid_model.fit(X_train,y_train)
-        
-        # st.write(grid_model.best_params_)
-        # st.write(grid_model.best_score_)
-        # st.write(grid_model.best_estimator_.score(x_train_vec,y_train))
-        
-        # pre=grid_model.predict(x_test_vec)
-        # st.text(pre)
-        
-        # acc=accuracy_score(y_test,pre)
-        # st.write(acc)
-        
-        pre=grid_model.predict([user_text])
-        st.text(pre)
+            # def ml_report(model_name):
+            #     model_name.fit(x_train_vec,y_train)
+            #     pred=model_name.predict(x_test_vec)
                 
-    # def ml2(self):
+            #     cr=classification_report(y_test,pred)
+            #     acc=accuracy_score(y_test,pred)
                 
-    #     data=self.df[["Text","Sentiment"]]
-        
-    #     X=data["Text"]
-    #     y=data["Sentiment"]
-        
-    #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
-    #     tf_idf=TfidfVectorizer(stop_words="english")
-    #     x_train_vec=tf_idf.fit_transform(X_train)
-    #     x_test_vec=tf_idf.transform(X_test)
-        
-    #     # def ml_report(model_name):
-    #     #     model_name.fit(x_train_vec,y_train)
-    #     #     pred=model_name.predict(x_test_vec)
+            #     st.text(acc)
+            #     # st.write(cr)
+                
+            # ml_report(KNeighborsClassifier())
+            operation = Pipeline([
+                ("tfidf", TfidfVectorizer(stop_words='english')),
+                ("model", SVC())
+            ])
             
-    #     #     cr=classification_report(y_test,pred)
-    #     #     acc=accuracy_score(y_test,pred)
+            # para={
+            #     "model__n_neighbors": range(1,30),
+            #     "model__metric":["euclidean","minowski"]
+            # }
+            para={"model__kernel":["linear","rbf"],
+            "model__C":np.logspace(0,2,10)}
             
-    #     #     st.text(acc)
-    #     #     # st.write(cr)
+            grid_model=GridSearchCV(estimator=operation,param_grid=para,cv=5,scoring="accuracy",n_jobs=-1,verbose=1)
             
-    #     # ml_report(KNeighborsClassifier())
-        
-    #     para={
-    #         "n_neighbors": range(1,30),
-    #         "metric":["euclidean","minowski"]
-    #     }
-        
-    #     grid_model=GridSearchCV(estimator=KNeighborsClassifier(),param_grid=para,cv=5,scoring="accuracy",n_jobs=-1,verbose=1)
-        
-    #     grid_model.fit(x_train_vec,y_train)
-        
-    #     st.write(grid_model.best_params_)
-    #     st.write(grid_model.best_score_)
-    #     st.write(grid_model.best_estimator_.score(x_train_vec,y_train))
-        
-        
+            grid_model.fit(X_train,y_train)
+            
+            # st.write(grid_model.best_params_)
+            # st.write(grid_model.best_score_)
+            # st.write(grid_model.best_estimator_.score(x_train_vec,y_train))
+            
+            # pre=grid_model.predict(x_test_vec)
+            # st.text(pre)
+            
+            # acc=accuracy_score(y_test,pre)
+            # st.write(acc)
+            
+            pre=grid_model.predict([user_text])
+            st.text(pre)
+        elif len(user_text)==0:
+            st.warning("Please Enter Text first to proceed......")
+            
                             
 class App(ML):
     
@@ -385,16 +349,12 @@ class App(ML):
         self.load_data()
         self.ml()
     
-    def run_ml_practice(self):
-        
-        self.load_data()
-        self.ml2()
     def app(self):
         
         options={"OverView":self.run_info,
                 "Insights": self.run_eda,
-                 "Sentiment Analyzer":self.run_ml,
-                 "Sentiment Analyzer_practice":self.run_ml_practice}
+                 "Sentiment Analyzer":self.run_ml
+                }
         
         st.markdown("""
             <style>
