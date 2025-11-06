@@ -79,7 +79,7 @@ scikit-learn
 
 **Acknowledgments**
 
-1. Dataset inspired by open-source sentiment analysis datasets.
+Dataset inspired by open-source sentiment analysis datasets.
 
-2. Streamlit and scikit-learn community documentation.
+Streamlit and scikit-learn community documentation.
 
