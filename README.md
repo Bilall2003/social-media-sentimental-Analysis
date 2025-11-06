@@ -61,13 +61,20 @@ Animated progress feedback with Streamlit st.status.
 
 **Requirements**
 
-streamlit
+streamlit 
+
 pandas
+
 numpy
+
 matplotlib
+
 seaborn
+
 Pillow
+
 wordcloud
+
 scikit-learn
 
 **Acknowledgments**
