@@ -49,6 +49,7 @@ Displays the predicted sentiment for user input.
 Animated progress feedback with Streamlit st.status.
 
 **Tech Stack**
+
 | Category             | Technologies Used                        |
 | -------------------- | ---------------------------------------- |
 | **Frontend**         | Streamlit, HTML, CSS                     |
@@ -59,6 +60,7 @@ Animated progress feedback with Streamlit st.status.
 | **Images/Display**   | Pillow (PIL)                             |
 
 **Requirements**
+
 streamlit
 pandas
 numpy
@@ -70,7 +72,7 @@ scikit-learn
 
 **Acknowledgments**
 
-. Dataset inspired by open-source sentiment analysis datasets.
+1. Dataset inspired by open-source sentiment analysis datasets.
 
-. Streamlit and scikit-learn community documentation.
+2. Streamlit and scikit-learn community documentation.
 
