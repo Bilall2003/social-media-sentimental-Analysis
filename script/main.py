@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from PIL import Image
 from sklearn.feature_extraction.text import TfidfVectorizer
 import streamlit as st
 import os
@@ -68,7 +67,7 @@ class info_insights(CSS):
     st.set_page_config(layout="centered")
     
     def load_data(self):
-        file_path = "Data/sentimentdataset.csv"
+        file_path = "Data/dataset.csv"
         
         if os.path.exists(file_path):
             try:
