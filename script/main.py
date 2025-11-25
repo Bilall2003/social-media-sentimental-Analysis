@@ -64,16 +64,16 @@ class CSS:
            
          
 class info_insights(CSS):
-    st.set_page_config(layout="centered")
     
     def load_data(self):
-        file_path = "Data/dataset.csv"
+        file_path = "Data/test.csv"
         
         if os.path.exists(file_path):
             try:
-                self.df = pd.read_csv(file_path)
-                logging.info(self.df.isnull().sum() / len(self.df) * 100)
-                logging.info(self.df.duplicated().sum() / len(self.df) * 100)
+                self.df = pd.read_csv(file_path,encoding="latin-1")
+                self.df.dropna(inplace=True)#26% null values
+                self.df.drop_duplicates(keep="first",inplace=True)  # 26% duplicaate found
+                self.df.reset_index(drop=True,inplace=True)#reset index after cleaning
                 return self.df
             except Exception as e:
                 logging.error(e)
@@ -86,39 +86,38 @@ class info_insights(CSS):
     
     def info(self):
         
+        st.set_page_config(layout="centered")
         self.css()
         st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
         st.warning("Read the instructions carefully....")
         st.markdown("""
-            <p1 class='word'>This app performs sentiment analysis on the user input,Since app shows different sentiments too apart of [**Positive,Neutral,Negative**]
+            <p1 class='word'>This app performs sentiment analysis on the user input,Since app shows different sentiments [**Positive,Neutral,Negative**]
             sentiments.It is more suitable for App to predict on larger and clearer Text.This app only Supports **English Words**.
             Following is the Dataset used for Training 👇🏻</p1>""",unsafe_allow_html=True)
         
         
-        columns=self.df[["Text","Sentiment"]]
+        columns=self.df[["text","sentiment"]]
         
         
         st.dataframe(columns)
         st.markdown("<h2 class='gradient-text'>Sentiments</h2>",unsafe_allow_html=True)
-        st.dataframe(pd.DataFrame(self.df["Sentiment"].unique(),columns=["Sentiments"]))
         
-        gr=self.df["Sentiment"].value_counts().reset_index()
-        gr.columns = ["Sentiment", "Count"]
+        gr=self.df["sentiment"].value_counts().reset_index()
+        gr.columns = ["sentiment", "Count"]
         
-        st.markdown("<h4 class='gradient-text'>Most Frequent Sentiments</h4>",unsafe_allow_html=True)
-        gr_sel=gr[gr["Count"]>5]
+        st.markdown("<h4 class='gradient-text'>Most Frequent sentiment</h4>",unsafe_allow_html=True)
         fig,ax=plt.subplots(nrows=1,ncols=1,figsize=(10,6),dpi=100)
-        sns.barplot(x="Sentiment", y="Count", data=gr_sel, ax=ax, palette="viridis")
+        sns.barplot(x="sentiment", y="Count", data=gr, ax=ax, palette="viridis")
         plt.xticks(rotation=90)
         st.pyplot(fig)
         
         
     def eda(self):
         
-        data=self.df[["Text","Sentiment"]]
+        data=self.df[["text","sentiment"]]
         
-        X=data["Text"]
-        y=data["Sentiment"]
+        X=data["text"]
+        y=data["sentiment"]
         
         
         tf_idf=TfidfVectorizer(stop_words="english")
@@ -155,8 +154,8 @@ class info_insights(CSS):
             col1,col2=st.columns([8,13],gap="large")
             
             with col1:
-                filtered = data[data["Text"].str.contains(voc_sel, case=False, na=False)][["Text", "Sentiment"]]
-                sentiment_counts = filtered["Sentiment"].value_counts()
+                filtered = data[data["text"].str.contains(voc_sel, case=False, na=False)][["text", "sentiment"]]
+                sentiment_counts = filtered["sentiment"].value_counts()
                 
                 if not filtered.empty:
                     st.subheader(f"Sentiment distribution")
@@ -180,7 +179,7 @@ class info_insights(CSS):
             with col2:
 
                 # Combine all text into one long string
-                text = " ".join(filtered["Text"].astype(str).tolist())
+                text = " ".join(filtered["text"].astype(str).tolist())
 
                 # Clean text: remove punctuation and lowercase
                 text = re.sub(r"[^\w\s]", "", text.lower())
@@ -205,10 +204,10 @@ class info_insights(CSS):
                 st.subheader(f"Number of Texts")
                 if len(filtered)>=text_sel:
                 
-                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
+                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["sentiment","text"])
                     
                 else :
-                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["Sentiment","Text"])
+                    st.dataframe(pd.DataFrame(filtered.head(text_sel)),column_order=["sentiment","text"])
                     st.warning(f"This vocabulary has not much text you selected : {text_sel}")
                     
             with col4:
