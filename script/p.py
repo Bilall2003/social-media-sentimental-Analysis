@@ -13,7 +13,7 @@ from wordcloud import WordCloud
 from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
+from sklearn.svm import SVC,LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay,classification_report,accuracy_score
@@ -81,6 +81,7 @@ class info_insights(CSS):
                 print(self.df.info())
                 logging.info(self.df.isnull().sum() / len(self.df) * 100)
                 logging.info(self.df.duplicated().sum() / len(self.df) * 100)
+                
                 return self.df
             except Exception as e:
                 logging.error(e)
@@ -88,5 +89,48 @@ class info_insights(CSS):
         else:
             logging.error("Invalid filepath.")
             return pd.DataFrame()
-obj=info_insights()
+
+class ml(info_insights):
+    
+    def model(self):
+        data=self.df[["text","sentiment"]]
+                
+        X=data["text"]
+        y=data["sentiment"]
+        
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+        tf_idf=TfidfVectorizer(stop_words="english")
+        x_train_vec=tf_idf.fit_transform(X_train)
+        x_test_vec=tf_idf.transform(X_test)
+        
+        def ml_report(model_name):
+            model_name.fit(x_train_vec,y_train)
+            pred=model_name.predict(x_test_vec)
+            
+            cr=classification_report(y_test,pred)
+            acc=accuracy_score(y_test,pred)
+            
+            print(acc)
+            print(cr)
+            
+        ml_report(AdaBoostClassifier())
+        
+        # model=LogisticRegression(max_iter=1000)
+        # para={
+        #     "penalty":["l2"],
+        #     'C': [0.1, 0.5, 1, 2, 5],
+        #     "solver":['saga','lbfgs', 'liblinear']
+            
+        # }
+        
+        # gridmodel=GridSearchCV(estimator=model,param_grid=para,cv=5,n_jobs=-1,verbose=2,scoring="accuracy")
+        # gridmodel.fit(x_train_vec,y_train)
+        
+        # print(gridmodel.best_params_)
+        # print(gridmodel.best_estimator_.score(x_train_vec,y_train))
+        # print(gridmodel.best_score_)
+        
+        
+obj=ml()
 obj.load_data()
+obj.model()
