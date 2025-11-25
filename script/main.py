@@ -275,58 +275,56 @@ class ML(info_insights):
                 time.sleep(5)
 
                 st.write("Running sentiment model...")
-                time.sleep(5)
 
+                data=self.df[["Text","Sentiment"]]
+                
+                X=data["Text"]
+                y=data["Sentiment"]
+                
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+                tf_idf=TfidfVectorizer(stop_words="english")
+                x_train_vec=tf_idf.fit_transform(X_train)
+                x_test_vec=tf_idf.transform(X_test)
+                
+                # def ml_report(model_name):
+                #     model_name.fit(x_train_vec,y_train)
+                #     pred=model_name.predict(x_test_vec)
+                    
+                #     cr=classification_report(y_test,pred)
+                #     acc=accuracy_score(y_test,pred)
+                    
+                #     st.text(acc)
+                #     # st.write(cr)
+                    
+                # ml_report(KNeighborsClassifier())
+                operation = Pipeline([
+                    ("tfidf", TfidfVectorizer(stop_words='english')),
+                    ("model", SVC())
+                ])
+                
+                # para={
+                #     "model__n_neighbors": range(1,30),
+                #     "model__metric":["euclidean","minowski"]
+                # }
+                para={"model__kernel":["linear","rbf"],
+                "model__C":np.logspace(0,2,10)}
+                
+                grid_model=GridSearchCV(estimator=operation,param_grid=para,cv=5,scoring="accuracy",n_jobs=-1,verbose=1)
+                
+                grid_model.fit(X_train,y_train)
+                
+                # st.write(grid_model.best_params_)
+                # st.write(grid_model.best_score_)
+                # st.write(grid_model.best_estimator_.score(x_train_vec,y_train))
+                
+                # pre=grid_model.predict(x_test_vec)
+                # st.text(pre)
+                
+                # acc=accuracy_score(y_test,pre)
+                # st.write(acc)
+                
+                pre=grid_model.predict([user_text])
                 status.update(label="✅ Analysis complete!", state="complete")
-                
-            data=self.df[["Text","Sentiment"]]
-            
-            X=data["Text"]
-            y=data["Sentiment"]
-            
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
-            tf_idf=TfidfVectorizer(stop_words="english")
-            x_train_vec=tf_idf.fit_transform(X_train)
-            x_test_vec=tf_idf.transform(X_test)
-            
-            # def ml_report(model_name):
-            #     model_name.fit(x_train_vec,y_train)
-            #     pred=model_name.predict(x_test_vec)
-                
-            #     cr=classification_report(y_test,pred)
-            #     acc=accuracy_score(y_test,pred)
-                
-            #     st.text(acc)
-            #     # st.write(cr)
-                
-            # ml_report(KNeighborsClassifier())
-            operation = Pipeline([
-                ("tfidf", TfidfVectorizer(stop_words='english')),
-                ("model", SVC())
-            ])
-            
-            # para={
-            #     "model__n_neighbors": range(1,30),
-            #     "model__metric":["euclidean","minowski"]
-            # }
-            para={"model__kernel":["linear","rbf"],
-            "model__C":np.logspace(0,2,10)}
-            
-            grid_model=GridSearchCV(estimator=operation,param_grid=para,cv=5,scoring="accuracy",n_jobs=-1,verbose=1)
-            
-            grid_model.fit(X_train,y_train)
-            
-            # st.write(grid_model.best_params_)
-            # st.write(grid_model.best_score_)
-            # st.write(grid_model.best_estimator_.score(x_train_vec,y_train))
-            
-            # pre=grid_model.predict(x_test_vec)
-            # st.text(pre)
-            
-            # acc=accuracy_score(y_test,pre)
-            # st.write(acc)
-            
-            pre=grid_model.predict([user_text])
             st.text(pre)
         elif len(user_text)==0:
             st.warning("Please Enter Text first to proceed......")
