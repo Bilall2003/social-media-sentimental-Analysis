@@ -57,7 +57,7 @@ class CSS:
                 text-align: center;
                 font-size: 20px;
                 font-weight: 400;
-                animation: blink 3s infinite; /* 1s duration, repeat forever */
+                animation: blink 2s infinite; /* 1s duration, repeat forever */
             }
 
             @keyframes blink {
@@ -97,10 +97,10 @@ class info_insights(CSS):
         self.css()
         st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
         st.warning("Read the instructions carefully....")
-        st.markdown("""
-            <p1 class='word'>This app performs sentiment analysis on the user input,Since app shows different sentiments [**Positive,Neutral,Negative**]
+        st.caption("""
+            This app performs sentiment analysis on the user input,Since app shows different sentiments [**Positive,Neutral,Negative**]
             sentiments.It is more suitable for App to predict on larger and clearer Text.This app only Supports **English Words**.
-            Following is the Dataset used for Training 👇🏻</p1>""",unsafe_allow_html=True)
+            Following is the Dataset used for Training 👇🏻""")
         
         
         columns=self.df[["text","sentiment"]]
@@ -327,23 +327,19 @@ class ML(info_insights):
                     confidence = probs[idx]
 
                     with col1:
-                        st.markdown("<p2 class='word'>Predicted Sentiment</p2>",unsafe_allow_html=True)
+                        st.markdown("**Predicted Sentiment**")
                     with col2:
-                        st.markdown("<p2 class='word'>Confidence Score</p2>",unsafe_allow_html=True)
+                        st.markdown("**Confidence Score**")
                     with col3:
-                        # st.text(f"{pred}")
                         st.markdown(f"<p2 class='word'>{pred}</p2>",unsafe_allow_html=True)
                     with col4:
                         st.markdown(f"<p2 class='word'>{confidence*100:.2f}%</p2>",unsafe_allow_html=True)
-                        # st.text(f"{confidence*100:.2f}%")
                     
                     st.subheader("Detailed Scores👇🏻")
                     
                     det_Score=pd.DataFrame({" ":['😞',"😐","😀"],"Sentiment":classes,"Confidence":[f"{p*100:.2f}%" for p in probs]})
                     st.table(det_Score)
                     st.form_submit_button("Clear and Analyze another text")
-                # st.text(f"Classes: {classes}")
-                # st.text(f"Probabilities: {probs}")
             
             except Exception as e:
                 st.error(f"Something Went Wrong")
