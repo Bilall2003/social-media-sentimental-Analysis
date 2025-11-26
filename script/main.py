@@ -53,11 +53,18 @@ class CSS:
                 background: linear-gradient(pink,white);
             }
             
-            .word{
+            .word {
                 text-align: center;
                 font-size: 20px;
                 font-weight: 400;
+                animation: blink 3s infinite; /* 1s duration, repeat forever */
             }
+
+            @keyframes blink {
+                0%, 50%, 100% { opacity: 1; }   
+                25%, 75% { opacity: 0; }        
+            }
+
      
             </style>
         """, unsafe_allow_html=True)
@@ -320,19 +327,21 @@ class ML(info_insights):
                     confidence = probs[idx]
 
                     with col1:
-                        st.text(f"Predicted Sentiment")
+                        st.markdown("<p2 class='word'>Predicted Sentiment</p2>",unsafe_allow_html=True)
                     with col2:
-                        st.text(f"Confidence Score")
+                        st.markdown("<p2 class='word'>Confidence Score</p2>",unsafe_allow_html=True)
                     with col3:
-                        st.text(f"{pred}")
+                        # st.text(f"{pred}")
+                        st.markdown(f"<p2 class='word'>{pred}</p2>",unsafe_allow_html=True)
                     with col4:
-                        st.text(f"{confidence*100:.2f}%")
+                        st.markdown(f"<p2 class='word'>{confidence*100:.2f}%</p2>",unsafe_allow_html=True)
+                        # st.text(f"{confidence*100:.2f}%")
                     
                     st.subheader("Detailed Scores👇🏻")
                     
                     det_Score=pd.DataFrame({" ":['😞',"😐","😀"],"Sentiment":classes,"Confidence":[f"{p*100:.2f}%" for p in probs]})
                     st.table(det_Score)
-                    st.form_submit_button("Clear and analyze another text")
+                    st.form_submit_button("Clear and Analyze another text")
                 # st.text(f"Classes: {classes}")
                 # st.text(f"Probabilities: {probs}")
             
