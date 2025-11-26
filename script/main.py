@@ -236,8 +236,9 @@ class ML(info_insights):
     def ml(self):
         st.set_page_config(layout="centered")
         self.css()
-        st.warning("Analysis is done on ML model which probably gives 60-70% accuracy or sometimes less so every text cannot give **True** answer")
+
         st.markdown("<h2 class='gradient-text'>🧠Sentiment Analysis with Ml Models</h2>",unsafe_allow_html=True)
+        st.caption("Analysis is done on ML model which probably gives 60-70% accuracy or sometimes less so every text cannot give **True** answer")
         
         user_text=st.text_area(label="Enter your text",label_visibility="collapsed",placeholder="Enter your text")
         
@@ -267,46 +268,79 @@ class ML(info_insights):
 
         if but_sel and len(user_text)>0:
             
-            with st.status("Analyzing.....", expanded=True) as status:
-                st.write("Checking text...")
-                time.sleep(5)
+            try:
+            
+                with st.status("Analyzing.....", expanded=True) as status:
+                    st.write("Checking text...")
+                    time.sleep(5)
 
-                st.write("Fetching information...")
-                time.sleep(5)
+                    st.write("Fetching information...")
+                    time.sleep(5)
 
-                st.write("Running sentiment model...")
+                    st.write("Running sentiment model...")
 
-                data=self.df[["text","sentiment"]]
-                
-                X=data["text"]
-                y=data["sentiment"]
-                
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
-                
-                tf_idf=TfidfVectorizer(stop_words="english")
-                x_train_vec=tf_idf.fit_transform(X_train)
-                x_test_vec=tf_idf.transform(X_test)
-                
-                operation = Pipeline([
-                    ("tfidf", TfidfVectorizer(stop_words="english")),
-                    ("model", LogisticRegression(max_iter=1000))
-                ])
-                
-                para={
-                    "model__penalty":["l2"],
-                    'model__C': [0.1, 0.5, 1, 2, 5],
-                    "model__solver":['lbfgs', 'liblinear']
+                    data=self.df[["text","sentiment"]]
                     
-                }
+                    X=data["text"]
+                    y=data["sentiment"]
+                    
+                    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+                    
+                    tf_idf=TfidfVectorizer(stop_words="english")
+                    x_train_vec=tf_idf.fit_transform(X_train)
+                    x_test_vec=tf_idf.transform(X_test)
+                    
+                    operation = Pipeline([
+                        ("tfidf", TfidfVectorizer(stop_words="english")),
+                        ("model", LogisticRegression(max_iter=1000))
+                    ])
+                    
+                    para={
+                        "model__penalty":["l2"],
+                        'model__C': [0.1, 0.5, 1, 2, 5],
+                        "model__solver":['lbfgs', 'liblinear']
+                        
+                    }
+                    
+                    gridmodel=GridSearchCV(estimator=operation,param_grid=para,cv=5,n_jobs=-1,verbose=2)
+                    gridmodel.fit(X_train,y_train)
+                    
+                    pred = gridmodel.predict([user_text])[0]
+                    probs = gridmodel.predict_proba([user_text])[0]
+                    classes = gridmodel.classes_
+                    
+                    status.update(label="✅ Analysis complete!",state="complete")
                 
-                gridmodel=GridSearchCV(estimator=operation,param_grid=para,cv=5,n_jobs=-1,verbose=2)
-                gridmodel.fit(X_train,y_train)
-                
-                pre=gridmodel.predict([user_text])
-                status.update(label="✅ Analysis complete!", state="complete")
-            st.text(pre)
+                with st.form("Report"):
+                    st.title("Analysis Report")
+                    col1,col2=st.columns(2,gap="large")
+                    col3,col4=st.columns(2,gap="large")
+                    
+                    idx = list(classes).index(pred)
+                    confidence = probs[idx]
+
+                    with col1:
+                        st.text(f"Predicted Sentiment")
+                    with col2:
+                        st.text(f"Confidence Score")
+                    with col3:
+                        st.text(f"{pred}")
+                    with col4:
+                        st.text(f"{confidence*100:.2f}%")
+                    
+                    st.subheader("Detailed Scores👇🏻")
+                    
+                    det_Score=pd.DataFrame({" ":['😞',"😐","😀"],"Sentiment":classes,"Confidence":[f"{p*100:.2f}%" for p in probs]})
+                    st.table(det_Score)
+                    st.form_submit_button("Clear and analyze another text")
+                # st.text(f"Classes: {classes}")
+                # st.text(f"Probabilities: {probs}")
+            
+            except Exception as e:
+                st.error(f"Something Went Wrong")
+            
         elif len(user_text)==0:
-            st.warning("Please Enter Text first to proceed......")
+                st.warning("Please Enter Text first to proceed......")
             
                             
 class App(ML):
