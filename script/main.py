@@ -277,6 +277,7 @@ class ML(info_insights):
             
             try:
             
+                st.info("Hold On...This may take a few Moments")
                 with st.status("Analyzing.....", expanded=True) as status:
                     st.write("Checking text...")
                     time.sleep(5)
