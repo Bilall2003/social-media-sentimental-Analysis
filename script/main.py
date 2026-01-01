@@ -11,12 +11,7 @@ import re
 from collections import Counter
 from wordcloud import WordCloud
 from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay,classification_report,accuracy_score
 from sklearn.pipeline import Pipeline
 
 
@@ -73,7 +68,7 @@ class CSS:
 class info_insights(CSS):
     
         def load_data(self):
-            file_path = "Data/test.csv"
+            file_path = "Data/train.csv"
             
             if os.path.exists(file_path):
                 try:
