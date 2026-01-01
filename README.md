@@ -59,7 +59,6 @@ Animated progress feedback with Streamlit st.status.
 | **Visualization**    | Seaborn, Matplotlib, WordCloud           |
 | **Machine Learning** | scikit-learn (SVM, GridSearchCV, TF-IDF) |
 | **Utilities**        | Logging, Regex, Collections              |
-| **Images/Display**   | Pillow (PIL)                             |
 
 **Requirements**
 streamlit
