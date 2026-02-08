@@ -5,4 +5,5 @@ matplotlib
 scikit-learn
 streamlit
 wordcloud
+altair==4.2.2
 
