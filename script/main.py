@@ -94,12 +94,12 @@ class info_insights(CSS):
 
             columns = self.df[["text", "sentiment"]]
             st.dataframe(columns)
-            st.markdown("<h2 class='gradient-text'>Sentiments</h2>", unsafe_allow_html=True)
+            st.subheader("Sentiments")
 
             gr = self.df["sentiment"].value_counts().reset_index()
             gr.columns = ["sentiment", "Count"]
 
-            st.markdown("<h4 class='gradient-text'>Most Frequent sentiment</h4>", unsafe_allow_html=True)
+            st.subheader("Most Frequent sentiment")
             fig, ax = plt.subplots(figsize=(10, 6), dpi=100)
             sns.barplot(x="sentiment", y="Count", data=gr, ax=ax, palette="viridis")
             plt.xticks(rotation=90)
