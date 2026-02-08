@@ -68,7 +68,6 @@ class CSS:
 class info_insights(CSS):
     
         def load_data(self):
-            st.set_page_config(layout="centered")
             file_path = "Data/train.csv"
             
             if os.path.exists(file_path):
