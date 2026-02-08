@@ -88,6 +88,7 @@ class info_insights(CSS):
         
         def info(self):
             
+            st.caption("hi")
             self.css()
             st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
             st.warning("Read the instructions carefully....")
