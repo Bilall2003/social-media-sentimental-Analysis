@@ -68,8 +68,8 @@ class CSS:
 class info_insights(CSS):
     
         def load_data(self):
+            st.set_page_config(layout="centered")
             file_path = "Data/train.csv"
-            print(f"Attempting to load data from: {file_path}")
             
             if os.path.exists(file_path):
                 try:
@@ -89,7 +89,6 @@ class info_insights(CSS):
         
         def info(self):
             
-            st.set_page_config(layout="centered")
             self.css()
             st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
             st.warning("Read the instructions carefully....")
