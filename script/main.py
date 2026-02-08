@@ -69,6 +69,7 @@ class info_insights(CSS):
     
         def load_data(self):
             file_path = "Data/train.csv"
+            print(f"Attempting to load data from: {file_path}")
             
             if os.path.exists(file_path):
                 try:
