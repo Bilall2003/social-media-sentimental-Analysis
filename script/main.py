@@ -85,7 +85,7 @@ class info_insights(CSS):
     def info(self):
         with st.container():
             self.css()
-            st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
+            st.title("📝Social Media Sentiment Analyzer")
             st.warning("Read the instructions carefully....")
             st.caption("""
                 This app performs sentiment analysis on the user input, showing different sentiments [**Positive, Neutral, Negative**].
@@ -184,7 +184,7 @@ class ML(info_insights):
     def ml(self):
         with st.container():
             self.css()
-            st.title("🧠 Sentiment Analysis with ML Models")
+            st.title("🧠Sentiment Analysis")
             st.caption("Analysis is done on ML model (~60-70% accuracy)")
 
             user_text = st.text_area(label="Enter your text", label_visibility="collapsed", placeholder="Enter your text")
