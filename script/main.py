@@ -94,8 +94,6 @@ class info_insights(CSS):
 
             columns = self.df[["text", "sentiment"]]
             st.dataframe(columns)
-            st.subheader("Sentiments")
-
             gr = self.df["sentiment"].value_counts().reset_index()
             gr.columns = ["sentiment", "Count"]
 
