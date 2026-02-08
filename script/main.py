@@ -14,6 +14,12 @@ from sklearn.model_selection import train_test_split,cross_validate,GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
+st.set_page_config(
+    page_title="Social Media Sentiment Analyzer",
+    page_icon="📊",
+    layout="wide"
+)
+
 
 
 logging.basicConfig(
@@ -69,7 +75,6 @@ class info_insights(CSS):
     
         def load_data(self):
             file_path = "Data/train.csv"
-            st.set_page_config(layout="centered")
             
             if os.path.exists(file_path):
                 try:
@@ -89,7 +94,6 @@ class info_insights(CSS):
         
         def info(self):
             
-            st.set_page_config(layout="centered")
             self.css()
             st.markdown("<h1 class='gradient-text'>Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
             st.warning("Read the instructions carefully....")
@@ -117,7 +121,6 @@ class info_insights(CSS):
             
         def eda(self):
             
-                st.set_page_config(layout="wide")
                 data=self.df[["text","sentiment"]]
                 
                 X=data["text"]
@@ -237,7 +240,6 @@ class ML(info_insights):
         
         
         def ml(self):
-            st.set_page_config(layout="centered")
             self.css()
 
             st.markdown("<h2 class='gradient-text'>🧠Sentiment Analysis with Ml Models</h2>",unsafe_allow_html=True)
