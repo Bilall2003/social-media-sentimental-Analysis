@@ -184,7 +184,7 @@ class ML(info_insights):
     def ml(self):
         with st.container():
             self.css()
-            st.markdown("<h2 class='gradient-text'>🧠 Sentiment Analysis with ML Models</h2>", unsafe_allow_html=True)
+            st.title("🧠 Sentiment Analysis with ML Models")
             st.caption("Analysis is done on ML model (~60-70% accuracy)")
 
             user_text = st.text_area(label="Enter your text", label_visibility="collapsed", placeholder="Enter your text")
