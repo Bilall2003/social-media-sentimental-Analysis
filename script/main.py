@@ -17,7 +17,7 @@ from sklearn.pipeline import Pipeline
 st.set_page_config(
     page_title="Social Media Sentiment Analyzer",
     page_icon="📊",
-    layout="wide"
+    layout="centered"
 )
 
 
