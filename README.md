@@ -1,5 +1,5 @@
 # Live Link
-https://sentimentalizes.streamlit.app/
+Check out release
 
 # 🌐 Social Media Sentiment Analyzer
 ## 🧠 A Streamlit-based Web App for Sentiment Analysis using Machine Learning
