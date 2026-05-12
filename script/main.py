@@ -705,9 +705,9 @@ class App(ML):
 
     def app(self):
         options = {
-            "📊 Overview": self.run_info,
-            "🔍 Insights": self.run_eda,
-            "🧠 Analyzer": self.run_ml
+            " Overview": self.run_info,
+            " Insights": self.run_eda,
+            " Analyzer": self.run_ml
         }
 
         key_sel = st.radio(
