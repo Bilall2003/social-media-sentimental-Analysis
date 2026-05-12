@@ -54,13 +54,25 @@ class CSS:
             .main-title {
                 font-size: 56px;
                 font-weight: 900;
-                background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
                 text-align: center;
-                margin: 20px 0 30px 0;
-                animation: slideDown 0.8s ease;
-                filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+                
+                background: linear-gradient(
+                    90deg,
+                    #667eea,
+                    #764ba2,
+                    #f093fb
+                );
+
+                -webkit-background-clip: text;
+                background-clip: text;
+
+                -webkit-text-fill-color: transparent;
+
+                display: inline-block;
+                width: 100%;
+
+                margin-top: 20px;
+                margin-bottom: 30px;
             }
             
             @keyframes slideDown {
@@ -349,7 +361,8 @@ class info_insights(CSS):
         self.css()
         
         # Hero Section
-        st.markdown("<h1 class='main-title'>🎭 Social Media Sentiment Analyzer</h1>", unsafe_allow_html=True)
+        
+        st.title("🎭 Social Media Sentiment Analyzer")
         
         col1, col2, col3 = st.columns(3)
         
@@ -436,8 +449,7 @@ class info_insights(CSS):
     def eda(self):
         self.css()
         
-        st.markdown("<h1 class='main-title'>🔍 Deep Insights & Analysis</h1>", unsafe_allow_html=True)
-        
+        st.title("🔍 Deep Insights & Analysis")
         data = self.df[["text", "sentiment"]]
         X = data["text"]
         y = data["sentiment"]
@@ -568,8 +580,7 @@ class ML(info_insights):
     def ml(self):
         self.css()
         
-        st.markdown("<h1 class='main-title'>🧠 AI-Powered Sentiment Analysis</h1>", unsafe_allow_html=True)
-        
+        st.title("🧠 AI-Powered Sentiment Analysis")
         st.markdown("""
         <div class='info-card'>
             <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
