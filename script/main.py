@@ -611,7 +611,7 @@ class ML(info_insights):
                         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
                         
                         operation = Pipeline([
-                            ("tfidf", TfidfVectorizer(stop_words="english")),
+                            ("tfidf", TfidfVectorizer(stop_words="english",ngram_range=(1,2))),
                             ("model", LogisticRegression(max_iter=1000))
                         ])
                         
@@ -726,3 +726,4 @@ class App(ML):
 if __name__ == "__main__":
     obj = App()
     obj.app()
+    
