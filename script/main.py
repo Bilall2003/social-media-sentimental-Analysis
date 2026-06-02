@@ -707,12 +707,12 @@ class App(ML):
         }
 
         st.markdown("""
-            <style>
-            div[role="radiogroup"] > label {
-                justify-content: center ;
-            }
-            </style>
-            """, unsafe_allow_html=True)
+        <style>
+        div[role="radiogroup"]{
+            justify-content:center !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
         key_sel = st.radio(
             "Navigation",
