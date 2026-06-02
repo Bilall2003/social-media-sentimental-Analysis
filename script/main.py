@@ -406,7 +406,7 @@ class info_insights(CSS):
         """, unsafe_allow_html=True)
         
         # Dataset Preview
-        st.markdown("<h2 class='section-header'>📋 Training Dataset Preview</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 class='section-header'> Training Dataset Preview</h2>", unsafe_allow_html=True)
         
         columns = self.df[["text", "sentiment"]].head(100)
         st.dataframe(columns, use_container_width=True, height=400)
