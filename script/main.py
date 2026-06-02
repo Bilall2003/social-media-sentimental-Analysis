@@ -706,7 +706,7 @@ class App(ML):
             " Analyzer": self.run_ml
         }
 
-        col1, col2, col3 = st.columns([1, 2, 1])
+        col1, col2, col3 = st.columns([5, 2, 1])
 
         with col2:
             key_sel = st.radio(
