@@ -706,22 +706,17 @@ class App(ML):
             " Analyzer": self.run_ml
         }
 
-        st.markdown("""
-        <style>
-        div[role="radiogroup"]{
-            justify-content:center !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1, 2, 1])
 
-        key_sel = st.radio(
-            "Navigation",
-            list(options.keys()),
-            horizontal=True,
-            label_visibility="collapsed"
-        )
+        with col2:
+            key_sel = st.radio(
+                "Navigation",
+                list(options.keys()),
+                horizontal=True,
+                label_visibility="collapsed"
+            )
         st.markdown("<hr>", unsafe_allow_html=True)
-                    
+                            
         val_Sel = options[key_sel]
         val_Sel()
 
