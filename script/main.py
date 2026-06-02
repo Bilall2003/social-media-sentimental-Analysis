@@ -45,10 +45,6 @@ class CSS:
                 background-attachment: fixed;
             }
             
-            /* Hide Streamlit Branding */
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
             
             /* Gradient Title */
             .main-title {
@@ -590,6 +586,7 @@ class ML(info_insights):
             </p>
         </div>
         """, unsafe_allow_html=True)
+        st.caption("Spelling mistakes may affect the accuracy of the results.")
         
         user_text = st.text_area(
             label="Enter your text",
