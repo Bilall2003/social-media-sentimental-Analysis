@@ -412,7 +412,7 @@ class info_insights(CSS):
         st.dataframe(columns, use_container_width=True, height=400)
         
         # Sentiment Distribution
-        st.markdown("<h2 class='section-header'>📈 Sentiment Distribution</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 class='section-header'>Sentiment Distribution</h2>", unsafe_allow_html=True)
         
         gr = self.df["sentiment"].value_counts().reset_index()
         gr.columns = ["sentiment", "Count"]
