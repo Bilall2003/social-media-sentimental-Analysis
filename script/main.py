@@ -473,7 +473,7 @@ class info_insights(CSS):
                     col1, col2 = st.columns([1, 1.5], gap="large")
                     
                     with col1:
-                        st.markdown("<h2 class='section-header'>🥧 Sentiment Distribution</h2>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>Sentiment Distribution</h2>", unsafe_allow_html=True)
                         
                         fig, ax = plt.subplots(figsize=(8, 8))
                         fig.patch.set_facecolor('#0F2027')
@@ -501,7 +501,7 @@ class info_insights(CSS):
                         st.pyplot(fig)
                     
                     with col2:
-                        st.markdown("<h2 class='section-header'>🔥 Top 10 Most Frequent Words</h2>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>Top 10 Most Frequent Words</h2>", unsafe_allow_html=True)
                         
                         text = " ".join(filtered["text"].astype(str).tolist())
                         text = re.sub(r"[^\w\s]", "", text.lower())
@@ -539,7 +539,7 @@ class info_insights(CSS):
                     col3, col4 = st.columns([1.2, 1], gap="large")
                     
                     with col3:
-                        st.markdown("<h2 class='section-header'>📄 Filtered Text Data</h2>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>Filtered Text Data</h2>", unsafe_allow_html=True)
                         display_data = filtered.head(text_sel)[["sentiment", "text"]]
                         st.dataframe(display_data, use_container_width=True, height=400)
                         
@@ -547,7 +547,7 @@ class info_insights(CSS):
                             st.warning(f"⚠️ Only {len(filtered)} texts found containing '{voc_sel}'.")
                     
                     with col4:
-                        st.markdown("<h2 class='section-header'>☁️ Word Cloud</h2>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>Word Cloud</h2>", unsafe_allow_html=True)
                         
                         wordcloud = WordCloud(
                             background_color="#0F2027",
