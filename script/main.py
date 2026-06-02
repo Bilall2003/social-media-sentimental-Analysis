@@ -710,7 +710,7 @@ class App(ML):
             <style>
             div[role="radiogroup"] > label {
                 margin-right: 30px !important;
-                justify-content: center;
+                justify-content: center !important;
             }
             </style>
             """, unsafe_allow_html=True)
