@@ -14,10 +14,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
 # --- Streamlit page config ---
+
 st.set_page_config(
     page_title="Social Media Sentiment Analyzer",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 logging.basicConfig(
