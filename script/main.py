@@ -641,7 +641,6 @@ class ML(info_insights):
                         
                         st.markdown(f"""
                         <div class='result-card'>
-                            <div class='emoji-large'>{emoji}</div>
                             <div class='result-label'>Predicted Sentiment</div>
                             <div class='result-value'>{pred.upper()}</div>
                         </div>
@@ -650,7 +649,7 @@ class ML(info_insights):
                     with col2:
                         st.markdown(f"""
                         <div class='result-card'>
-                            <div class='emoji-large'>🎯</div>
+                            <div class='emoji-large'></div>
                             <div class='result-label'>Confidence Score</div>
                             <div class='result-value'>{confidence*100:.1f}%</div>
                         </div>
