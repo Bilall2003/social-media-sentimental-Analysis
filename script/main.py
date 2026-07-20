@@ -450,7 +450,7 @@ class info_insights(CSS):
         X = data["text"]
         y = data["sentiment"]
 
-        tf_idf = TfidfVectorizer(stop_words="english")
+        tf_idf = TfidfVectorizer(stop_words="english",min_df=3,max_df=0.70)
         x_vec = tf_idf.fit_transform(X)
         voc = tf_idf.vocabulary_
 
