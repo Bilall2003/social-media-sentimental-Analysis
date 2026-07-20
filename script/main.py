@@ -613,9 +613,7 @@ class ML(info_insights):
                         ])
                         
                         para = {
-                            "model__penalty": ["l2"],
                             'model__C': [0.1, 0.5, 1, 2, 5],
-                            "model__solver": ['lbfgs', 'liblinear']
                         }
                         
                         gridmodel = GridSearchCV(estimator=operation, param_grid=para, cv=5, n_jobs=-1)
