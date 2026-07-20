@@ -608,7 +608,7 @@ class ML(info_insights):
                         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
                         
                         operation = Pipeline([
-                            ("tfidf", TfidfVectorizer(stop_words=None),
+                            ("tfidf", TfidfVectorizer(stop_words=None)),
                             ("model", LogisticRegression(max_iter=1000))
                         ])
                         
