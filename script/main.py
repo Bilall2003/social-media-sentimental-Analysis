@@ -450,7 +450,7 @@ class info_insights(CSS):
         X = data["text"]
         y = data["sentiment"]
 
-        tf_idf = TfidfVectorizer(stop_words="english",min_df=3,max_df=0.70)
+        tf_idf = TfidfVectorizer(stop_words="english",min_df=5,max_df=0.60)
         x_vec = tf_idf.fit_transform(X)
         voc = tf_idf.vocabulary_
 
@@ -612,13 +612,13 @@ class ML(info_insights):
                             ("model", LogisticRegression(max_iter=1000))
                         ])
                         
-                        param_grid = {
+                        param = {
                             "tfidf__ngram_range": [(1,1), (1,2)],
                             "tfidf__min_df": [1, 2, 3],
                             "model__C": [0.1, 0.5, 1, 2, 5]
                         }
                         
-                        gridmodel = GridSearchCV(estimator=operation, param_grid=para, cv=5, n_jobs=-1)
+                        gridmodel = GridSearchCV(estimator=operation, param_grid=param, cv=5, n_jobs=-1)
                         gridmodel.fit(X_train, y_train)
 
                         pred = gridmodel.predict([user_text])[0]
