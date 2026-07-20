@@ -608,14 +608,13 @@ class ML(info_insights):
                         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
                         
                         operation = Pipeline([
-                            ("tfidf", TfidfVectorizer(stop_words=None,ngram_range=(1,2))),
+                            ("tfidf", TfidfVectorizer(stop_words=None),
                             ("model", LogisticRegression(max_iter=1000))
                         ])
                         
                         param_grid = {
                             "tfidf__ngram_range": [(1,1), (1,2)],
                             "tfidf__min_df": [1, 2, 3],
-                            "tfidf__max_df": [0.8, 0.9, 1.0],
                             "model__C": [0.1, 0.5, 1, 2, 5]
                         }
                         
