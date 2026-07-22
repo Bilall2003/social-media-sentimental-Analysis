@@ -88,7 +88,7 @@ This project provides:
 
 > **VADER** (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool specifically tuned for social media text — handling slang, emojis, punctuation emphasis (e.g. `"good!!!"`), and capitalization cues out of the box.
 
-Combining VADER with a trained **TF-IDF + SVM** model gives this app two complementary perspectives:
+Combining VADER with a trained **TF-IDF + LogR** model gives this app two complementary perspectives:
 
 | Approach | Strength |
 |---|---|
