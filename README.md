@@ -155,6 +155,6 @@ This project uses **GitHub Actions** for continuous integration:
 
 <div align="center">
 
-Made with ❤️ by **[Bilal Ahmed](https://github.com/Bilall2003)**
+Made by **[Bilal Ahmed](https://github.com/Bilall2003)**
 
 </div>
