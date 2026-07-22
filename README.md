@@ -24,7 +24,7 @@ This project provides:
 
 - 📊 Insightful **EDA (Exploratory Data Analysis)** on text sentiments
 - 🔍 A **search-based vocabulary analyzer** with word clouds and charts
-- 🤖 A **machine learning-based sentiment predictor** using TF-IDF and SVM
+- 🤖 A **machine learning-based sentiment predictor** using TF-IDF and Logistic Regression
 - ⚡ A **VADER-powered rule-based sentiment engine** for fast, lexicon-driven analysis
 - 🎨 A clean, responsive Streamlit dashboard with **custom CSS design**
 
@@ -53,7 +53,7 @@ This project provides:
 
 ### 🤖 ML Sentiment Analyzer
 - Custom English text input
-- TF-IDF Vectorization + Support Vector Machine (SVM)
+- TF-IDF Vectorization + Logistic Regression
 - GridSearchCV for hyperparameter tuning
 - Animated progress feedback via `st.status`
 
@@ -76,7 +76,7 @@ This project provides:
 | **Frontend**            | Streamlit, HTML, CSS                                 |
 | **Data Handling**       | Pandas, NumPy                                        |
 | **Visualization**       | Seaborn, Matplotlib, WordCloud                       |
-| **Machine Learning**    | scikit-learn (SVM, GridSearchCV, TF-IDF)             |
+| **Machine Learning**    | scikit-learn (Logistic Regression, GridSearchCV, TF-IDF)             |
 | **NLP / Sentiment**     | **VADER (vaderSentiment)**, scikit-learn             |
 | **Utilities**           | Logging, Regex, Collections                          |
 | **Containerization**    | Docker                                               |
@@ -93,7 +93,7 @@ Combining VADER with a trained **TF-IDF + SVM** model gives this app two complem
 | Approach | Strength |
 |---|---|
 | ⚡ **VADER** | Instant, no training needed, great for short/informal text |
-| 🤖 **ML (TF-IDF + SVM)** | Learns patterns from your dataset, adapts to domain-specific language |
+| 🤖 **ML (TF-IDF + Logistic Regression)** | Learns patterns from your dataset, adapts to domain-specific language |
 
 ---
 
