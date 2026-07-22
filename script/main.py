@@ -577,110 +577,115 @@ class ML(info_insights):
         self.css()
         
         st.title("🧠 AI-Powered Sentiment Analysis")
-        st.markdown("""
-        <div class='info-card'>
-            <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
-            <p>
-                Enter your text below and our machine learning model will analyze the sentiment in real-time.
-                The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.caption("Spelling mistakes may affect the accuracy of the results.")
-        
-        user_text = st.text_area(
-            label="Enter your text",
-            placeholder="Type or paste your social media text here... (e.g., 'I love this product! It's amazing!')",
-            label_visibility="collapsed",
-            height=150
-        )
+        tab1, tab2 = st.tabs(["Analysis Through Machine-Learning Model ", "Analysis with Vader"])
+        with tab1:
+            st.markdown("""
+            <div class='info-card'>
+                <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
+                <p>
+                    Enter your text below and our machine learning model will analyze the sentiment in real-time.
+                    The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.caption("Spelling mistakes may affect the accuracy of the results.")
+            
+            user_text = st.text_area(
+                label="Enter your text",
+                placeholder="Type or paste your social media text here... (e.g., 'I love this product! It's amazing!')",
+                label_visibility="collapsed",
+                height=150
+            )
 
-        but_sel = st.button("🚀 Analyze Sentiment", use_container_width=True)
-        
-        if but_sel:
-            if len(user_text.strip()) > 0:
-                try:
-                    with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
-                        data = self.df[["text", "sentiment"]]
-                        X = data["text"]
-                        y = data["sentiment"]
+            but_sel = st.button("🚀 Analyze Sentiment", use_container_width=True)
+            
+            if but_sel:
+                if len(user_text.strip()) > 0:
+                    try:
+                        with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
+                            data = self.df[["text", "sentiment"]]
+                            X = data["text"]
+                            y = data["sentiment"]
 
-                        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+                            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=101)
+                            
+                            operation = Pipeline([
+                                ("tfidf", TfidfVectorizer(stop_words=None)),
+                                ("model", LogisticRegression(max_iter=1000))
+                            ])
+                            
+                            param = {
+                                "tfidf__ngram_range": [(1,1), (1,2)],
+                                "tfidf__min_df": [1, 2, 3],
+                                "model__C": [0.1, 0.5, 1, 2, 5]
+                            }
+                            
+                            gridmodel = GridSearchCV(estimator=operation, param_grid=param, cv=5, n_jobs=-1)
+                            gridmodel.fit(X_train, y_train)
+
+                            pred = gridmodel.predict([user_text])[0]
+                            probs = gridmodel.predict_proba([user_text])[0]
+                            classes = gridmodel.classes_
+
+                        st.success("✅ Analysis Complete!")
+                        st.markdown("<hr>", unsafe_allow_html=True)
                         
-                        operation = Pipeline([
-                            ("tfidf", TfidfVectorizer(stop_words=None)),
-                            ("model", LogisticRegression(max_iter=1000))
-                        ])
+                        # Results Section
+                        st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
                         
-                        param = {
-                            "tfidf__ngram_range": [(1,1), (1,2)],
-                            "tfidf__min_df": [1, 2, 3],
-                            "model__C": [0.1, 0.5, 1, 2, 5]
-                        }
+                        idx = list(classes).index(pred)
+                        confidence = probs[idx]
                         
-                        gridmodel = GridSearchCV(estimator=operation, param_grid=param, cv=5, n_jobs=-1)
-                        gridmodel.fit(X_train, y_train)
-
-                        pred = gridmodel.predict([user_text])[0]
-                        probs = gridmodel.predict_proba([user_text])[0]
-                        classes = gridmodel.classes_
-
-                    st.success("✅ Analysis Complete!")
-                    st.markdown("<hr>", unsafe_allow_html=True)
-                    
-                    # Results Section
-                    st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
-                    
-                    idx = list(classes).index(pred)
-                    confidence = probs[idx]
-                    
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            emoji_map = {"positive": "😀", "neutral": "😐", "negative": "😞"}
+                            emoji = emoji_map.get(pred.lower(), "🤔")
+                            
+                            st.markdown(f"""
+                            <div class='result-card'>
+                                <div class='result-label'>Predicted Sentiment</div>
+                                <div class='result-value'>{pred.upper()}</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        
+                        with col2:
+                            st.markdown(f"""
+                            <div class='result-card'>
+                                <div class='emoji-large'></div>
+                                <div class='result-label'>Confidence Score</div>
+                                <div class='result-value'>{confidence*100:.1f}%</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        
+                        st.markdown("<hr>", unsafe_allow_html=True)
+                        
+                        # Detailed Breakdown
+                        st.subheader("📋 Detailed Confidence Breakdown")
+                        
                         emoji_map = {"positive": "😀", "neutral": "😐", "negative": "😞"}
-                        emoji = emoji_map.get(pred.lower(), "🤔")
+                        det_Score = pd.DataFrame({
+                            "Emoji": [emoji_map.get(c.lower(), "🤔") for c in classes],
+                            "Sentiment": [c.upper() for c in classes],
+                            "Confidence": [f"{p*100:.2f}%" for p in probs],
+                            "Probability": probs
+                        })
                         
-                        st.markdown(f"""
-                        <div class='result-card'>
-                            <div class='result-label'>Predicted Sentiment</div>
-                            <div class='result-value'>{pred.upper()}</div>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    
-                    with col2:
-                        st.markdown(f"""
-                        <div class='result-card'>
-                            <div class='emoji-large'></div>
-                            <div class='result-label'>Confidence Score</div>
-                            <div class='result-value'>{confidence*100:.1f}%</div>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    
-                    st.markdown("<hr>", unsafe_allow_html=True)
-                    
-                    # Detailed Breakdown
-                    st.subheader("📋 Detailed Confidence Breakdown")
-                    
-                    emoji_map = {"positive": "😀", "neutral": "😐", "negative": "😞"}
-                    det_Score = pd.DataFrame({
-                        "Emoji": [emoji_map.get(c.lower(), "🤔") for c in classes],
-                        "Sentiment": [c.upper() for c in classes],
-                        "Confidence": [f"{p*100:.2f}%" for p in probs],
-                        "Probability": probs
-                    })
-                    
-                    # Style the dataframe
-                    st.dataframe(
-                        det_Score[["Emoji", "Sentiment", "Confidence"]],
-                        use_container_width=True,
-                        hide_index=True
-                    )
-                    
-                except Exception as e:
-                    st.error(f"❌ Something went wrong: {e}")
-                    logging.error(f"ML Error: {e}")
-            else:
-                st.warning("⚠️ Please enter some text to analyze!")
+                        # Style the dataframe
+                        st.dataframe(
+                            det_Score[["Emoji", "Sentiment", "Confidence"]],
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                        
+                    except Exception as e:
+                        st.error(f"❌ Something went wrong: {e}")
+                        logging.error(f"ML Error: {e}")
+                else:
+                    st.warning("⚠️ Please enter some text to analyze!")
+        with tab2:
+            st.title("Hello to vader")
+                
 
 # --- Main App ---
 class App(ML):
