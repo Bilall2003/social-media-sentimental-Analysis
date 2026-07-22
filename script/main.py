@@ -577,7 +577,7 @@ class ML(info_insights):
         self.css()
         
         st.title("🧠 AI-Powered Sentiment Analysis")
-        tab1, tab2 = st.tabs(["Analysis Through Machine-Learning Model ", "Analysis with Vader"])
+        tab1 = st.tabs(["Analysis Through Machine-Learning Model ", "Analysis with Vader"])
         with tab1:
             st.markdown("""
             <div class='info-card'>
