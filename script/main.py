@@ -726,14 +726,31 @@ class ML(info_insights):
                 if len(user_text.strip()) > 0:
                     try:
                         with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
+                            label=[]
                             analyzer=SentimentIntensityAnalyzer()
                             sent=analyzer.polarity_scores(user_text)['compound']
+                            
                             st.success("✅ Analysis Complete!")
-                            st.write(sent)
                             st.markdown("<hr>", unsafe_allow_html=True)
                             
+                            if sent >=0.05:
+                                label.append("POSITIVE")
+                            elif sent<=-0.05:
+                                label.append("NEGATIVE")
+                            else:
+                                label.append("NEUTRAL")
+                            
+                            
+                            
                             # Results Section
-                            st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
+                            st.markdown("<h2 class='section-header'>Analysis Results</h2>", unsafe_allow_html=True)
+                            st.markdown(f"""
+                                                        <div class='result-card'>
+                                                            <div class='result-label'>Predicted Sentiment</div>
+                                                            <div class='result-value'>{label}</div>
+                                                        </div>
+                                                        """, unsafe_allow_html=True)
+                                                    
                     except Exception as e:
                             st.error(e)
                 else:
@@ -777,6 +794,7 @@ class App(ML):
                             
         val_Sel = options[key_sel]
         val_Sel()
+    
 
 # --- Run app ---
 if __name__ == "__main__":
