@@ -743,29 +743,29 @@ class ML(info_insights):
                             
                             # Results Section
                             st.markdown(f"""
-                                <div class='result-card'>
-                                    <div class='result-label'>Predicted Sentiment</div>
-                                    <div class='result-value'>{label}</div>
-                                    <p>Compound Score: {sent:.4f}</p>
-                                </div>
-                                """, unsafe_allow_html=True)
+                            <div class='result-card'>
+                                <div class='result-label'>Predicted Sentiment</div>
+                                <div class='result-value'>{label}</div>
+                                <p>Compound Score: {sent:.2f}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
 
                             st.metric(
-                                    label="VADER Compound Score",
-                                    value=f"{sent:.4f}",
-                                    help="""
-                                    The compound score is a normalized sentiment score ranging from -1 to +1.
+                                label="VADER Compound Score",
+                                value=f"{sent:.2f}",
+                                help="""
+                                The compound score is a normalized sentiment score ranging from -1 to +1.
 
-                                    - +1 : Extremely Positive
-                                    - 0 : Neutral
-                                    - -1 : Extremely Negative
+                                - +1 : Extremely Positive
+                                - 0 : Neutral
+                                - -1 : Extremely Negative
 
-                                    VADER uses this score to determine the overall sentiment:
-                                    - >= 0.05 → Positive
-                                    - <= -0.05 → Negative
-                                    - Otherwise → Neutral
-                                    """
-                                )
+                                VADER uses this score to determine the overall sentiment:
+                                - >= 0.05 → Positive
+                                - <= -0.05 → Negative
+                                - Otherwise → Neutral
+                                """
+                            )
                                                                                 
                     except Exception as e:
                             st.error(e)
