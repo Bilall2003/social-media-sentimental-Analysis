@@ -577,7 +577,9 @@ class ML(info_insights):
         self.css()
         
         st.title("🧠 AI-Powered Sentiment Analysis")
+        
         tab1,tab2 = st.tabs(["Analysis Through Machine-Learning Model ", "Analysis with Vader"])
+        
         with tab1:
             st.markdown("""
             <div class='info-card'>
@@ -684,7 +686,15 @@ class ML(info_insights):
                 else:
                     st.warning("⚠️ Please enter some text to analyze!")
         with tab2:
-            st.title("Hello to vader")
+            st.markdown("""
+                        <div class='info-card'>
+                            <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
+                            <p>
+                                Enter your text below and our Vader Library will analyze the sentiment in real-time.
+                                This method uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
+                            </p>
+                        </div>
+                        """, unsafe_allow_html=True)
                 
 
 # --- Main App ---
