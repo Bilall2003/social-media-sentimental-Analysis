@@ -726,31 +726,47 @@ class ML(info_insights):
                 if len(user_text.strip()) > 0:
                     try:
                         with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
-                            label=[]
                             analyzer=SentimentIntensityAnalyzer()
                             sent=analyzer.polarity_scores(user_text)['compound']
                             
                             st.success("✅ Analysis Complete!")
                             st.markdown("<hr>", unsafe_allow_html=True)
                             
-                            if sent >=0.05:
-                                label.append("POSITIVE")
-                            elif sent<=-0.05:
-                                label.append("NEGATIVE")
+                            if sent >= 0.05:
+                                label = "POSITIVE"
+                            elif sent <= -0.05:
+                                label = "NEGATIVE"
                             else:
-                                label.append("NEUTRAL")
-                            
+                                label = "NEUTRAL"
+                                                        
                             
                             
                             # Results Section
-                            st.markdown("<h2 class='section-header'>Analysis Results</h2>", unsafe_allow_html=True)
                             st.markdown(f"""
-                                                        <div class='result-card'>
-                                                            <div class='result-label'>Predicted Sentiment</div>
-                                                            <div class='result-value'>{label}</div>
-                                                        </div>
-                                                        """, unsafe_allow_html=True)
-                                                    
+                                <div class='result-card'>
+                                    <div class='result-label'>Predicted Sentiment</div>
+                                    <div class='result-value'>{label}</div>
+                                    <p>Compound Score: {sent:.4f}</p>
+                                </div>
+                                """, unsafe_allow_html=True)
+
+                            st.metric(
+                                    label="VADER Compound Score",
+                                    value=f"{sent:.4f}",
+                                    help="""
+                                    The compound score is a normalized sentiment score ranging from -1 to +1.
+
+                                    - +1 : Extremely Positive
+                                    - 0 : Neutral
+                                    - -1 : Extremely Negative
+
+                                    VADER uses this score to determine the overall sentiment:
+                                    - >= 0.05 → Positive
+                                    - <= -0.05 → Negative
+                                    - Otherwise → Neutral
+                                    """
+                                )
+                                                                                
                     except Exception as e:
                             st.error(e)
                 else:
