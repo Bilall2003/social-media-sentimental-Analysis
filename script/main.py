@@ -12,6 +12,7 @@ from wordcloud import WordCloud
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # --- Streamlit page config ---
 
@@ -725,9 +726,16 @@ class ML(info_insights):
                 if len(user_text.strip()) > 0:
                     try:
                         with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
-                            pass
+                            analyzer=SentimentIntensityAnalyzer()
+                            sent=analyzer.polarity_scores(user_text)['compound']
+                            st.success("✅ Analysis Complete!")
+                            st.write(sent)
+                            st.markdown("<hr>", unsafe_allow_html=True)
+                            
+                            # Results Section
+                            st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
                     except Exception as e:
-                        st.error(e)
+                            st.error(e)
                 else:
                     st.warning("please insert Text to continue........")
                 
