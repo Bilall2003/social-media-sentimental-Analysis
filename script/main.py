@@ -587,6 +587,14 @@ class ML(info_insights):
                 <p>
                     Enter your text below and our machine learning model will analyze the sentiment in real-time.
                     The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
+                    PROS<br>
+                    No labels required<br>
+                    No training required<br>
+                    Works immediately<br>
+                    Good for social media, reviews, tweets<br>
+                    <br>
+                    CONS:<br>
+                    Cannot learn domain-specific language
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -695,7 +703,15 @@ class ML(info_insights):
                                 VADER is a rule-based and lexicon-based sentiment analysis technique that is particularly effective
                                 for social media content, emojis, punctuation, and informal language. Depending on the dataset,
                                 it typically achieves <strong>70–80% accuracy</strong> and provides a compound sentiment score
-                                ranging from <strong>-1 (Negative)</strong> to <strong>+1 (Positive)</strong>..
+                                ranging from <strong>-1 (Negative)</strong> to <strong>+1 (Positive)</strong>..<hr>
+                                PROS<br>
+                                No labels required<br>
+                                No training required<br>
+                                Works immediately<br>
+                                Good for social media, reviews, tweets<br>
+                                <br>
+                                CONS:<br>
+                                Cannot learn domain-specific language
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
