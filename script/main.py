@@ -690,8 +690,12 @@ class ML(info_insights):
                         <div class='info-card'>
                             <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
                             <p>
-                                Enter your text below and our Vader Library will analyze the sentiment in real-time.
-                                This method uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
+                                Enter your text below and our <strong>VADER (Valence Aware Dictionary and sEntiment Reasoner)</strong>
+                                engine will analyze its sentiment in real-time.<br>
+                                VADER is a rule-based and lexicon-based sentiment analysis technique that is particularly effective
+                                for social media content, emojis, punctuation, and informal language. Depending on the dataset,
+                                it typically achieves <strong>70–80% accuracy</strong> and provides a compound sentiment score
+                                ranging from <strong>-1 (Negative)</strong> to <strong>+1 (Positive)</strong>..
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
