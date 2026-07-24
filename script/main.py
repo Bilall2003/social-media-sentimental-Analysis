@@ -586,16 +586,8 @@ class ML(info_insights):
                 <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
                 <p>
                     Enter your text below and our machine learning model will analyze the sentiment in real-time.
-                    The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
-                    PROS<br>
-                    No labels required<br>
-                    No training required<br>
-                    Works immediately<br>
-                    Good for social media, reviews, tweets<br>
-                    <br>
-                    CONS:<br>
-                    Cannot learn domain-specific language
-                </p>
+                    The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.<br>
+              
             </div>
             """, unsafe_allow_html=True)
             st.caption("Spelling mistakes may affect the accuracy of the results.")
