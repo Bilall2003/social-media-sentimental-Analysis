@@ -596,7 +596,8 @@ class ML(info_insights):
                 label="Enter your text",
                 placeholder="Type or paste your social media text here... (e.g., 'I love this product! It's amazing!')",
                 label_visibility="collapsed",
-                height=150
+                height=150,
+                key="mlmodel"
             )
 
             but_sel = st.button("🚀 Analyze Sentiment", use_container_width=True)
@@ -707,6 +708,28 @@ class ML(info_insights):
                             </p>
                         </div>
                         """, unsafe_allow_html=True)
+            
+            st.caption("Spelling mistakes may affect the accuracy of the results.")
+                        
+            user_text = st.text_area(
+                label="Enter your text",
+                placeholder="Type or paste your social media text here... (e.g., 'I love this product! It's amazing!')",
+                label_visibility="collapsed",
+                height=150,
+                key="vader"
+            )
+
+            but_sel2 = st.button("🚀 Analyze Sentiment", use_container_width=True,key="vaderbutton")
+            
+            if but_sel2:
+                if len(user_text.strip()) > 0:
+                    try:
+                        with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
+                            pass
+                    except Exception as e:
+                        st.error(e)
+                else:
+                    st.warning("please insert Text to continue........")
                 
 
 # --- Main App ---
