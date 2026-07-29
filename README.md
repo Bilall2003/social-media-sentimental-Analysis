@@ -76,7 +76,7 @@ This project provides:
 | **Frontend**            | Streamlit, HTML, CSS                                 |
 | **Data Handling**       | Pandas, NumPy                                        |
 | **Visualization**       | Seaborn, Matplotlib, WordCloud                       |
-| **Machine Learning**    | scikit-learn (Logistic Regression, GridSearchCV, TF-IDF)             |
+| **Machine Learning**    | scikit-learn (Logistic Regression, GridSearchCV, TF-IDF) ,spacy            |
 | **NLP / Sentiment**     | **VADER (vaderSentiment)**, scikit-learn             |
 | **Utilities**           | Logging, Regex, Collections                          |
 | **Containerization**    | Docker                                               |
