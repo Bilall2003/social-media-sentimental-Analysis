@@ -689,27 +689,33 @@ class ML(info_insights):
                 else:
                     st.warning("⚠️ Please enter some text to analyze!")
         with tab2:
-            st.markdown("""
-                        <div class='info-card'>
-                            <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
-                            <p>
-                                Enter your text below and our <strong>VADER (Valence Aware Dictionary and sEntiment Reasoner)</strong>
-                                engine will analyze its sentiment in real-time.<br>
-                                VADER is a rule-based and lexicon-based sentiment analysis technique that is particularly effective
-                                for social media content, emojis, punctuation, and informal language. Depending on the dataset,
-                                it typically achieves <strong>70–80% accuracy</strong> and provides a compound sentiment score
-                                ranging from <strong>-1 (Negative)</strong> to <strong>+1 (Positive)</strong>..<hr>
-                                PROS<br>
-                                No labels required<br>
-                                No training required<br>
-                                Works immediately<br>
-                                Good for social media, reviews, tweets<br>
-                                <br>
-                                CONS:<br>
-                                Cannot learn domain-specific language
-                            </p>
-                        </div>
-                        """, unsafe_allow_html=True)
+            st.html("""
+                    <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; color: #fff; font-family: sans-serif;">
+                        <h3 style="color: #ffd700; margin-top: 0; margin-bottom: 15px;">💡 How It Works</h3>
+                        
+                        <p style="margin-bottom: 8px;">
+                            <strong style="color: #ffd700;">1. VADER Sentiment Analysis</strong><br>
+                            A lexicon-based engine that scores text from <strong>-1 (Negative)</strong> to <strong>+1 (Positive)</strong>. Ideal for social media, emojis, and informal language (70–80% accuracy).
+                        </p>
+                        <ul style="margin-top: 0; margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+                            <li><strong>Pros:</strong> No training or data labeling required; works instantly.</li>
+                            <li><strong>Cons:</strong> Cannot adapt to domain-specific jargon or complex sarcasm.</li>
+                        </ul>
+                        
+                        <hr style="border: 0; border-top: 1px dashed #555; margin-bottom: 20px;">
+                        
+                        <p style="margin-bottom: 8px;">
+                            <strong style="color: #ffd700;">2. Topic Modeling (LDA)</strong><br>
+                            An unsupervised ML algorithm that uncovers hidden themes and clusters recurring subjects across text collections without manual reading.
+                        </p>
+                        <ul style="margin-top: 0; margin-bottom: 5px; padding-left: 20px; list-style-type: disc;">
+                            <li><strong>Pros:</strong> Discovers unexpected trends without pre-defined categories.</li>
+                            <li><strong>Cons:</strong> Requires human interpretation to name the generated topics.</li>
+                        </ul>
+                    </div>
+                    """)
+
+
             
             st.caption("Spelling mistakes may affect the accuracy of the results.")
                         
