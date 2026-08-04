@@ -711,7 +711,7 @@ class ML(info_insights):
                         <hr style="border: 0; border-top: 1px dashed #555; margin-bottom: 20px;">
                         
                         <p style="margin-bottom: 8px;">
-                            <strong style="color: #ffd700;">2. Topic Modeling (LDA)</strong><br>
+                            <strong style="color: #ffd700;">2. Topic Modeling (NMF)</strong><br>
                             An unsupervised ML algorithm that uncovers hidden themes and clusters recurring subjects across text collections without manual reading.
                         </p>
                         <ul style="margin-top: 0; margin-bottom: 5px; padding-left: 20px; list-style-type: disc;">
