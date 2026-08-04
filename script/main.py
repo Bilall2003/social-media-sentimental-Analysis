@@ -583,15 +583,22 @@ class ML(info_insights):
         tab1,tab2 = st.tabs(["Analysis with Machine-Learning Model ", "Analytics Using VADER and NMF"])
         
         with tab1:
-            st.markdown("""
-            <div class='info-card'>
-                <h3 style='color: #ffd700; margin-bottom: 15px;'>💡 How It Works</h3>
-                <p>
-                    Enter your text below and our machine learning model will analyze the sentiment in real-time.
-                    The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.<br>
-              
-            </div>
-            """, unsafe_allow_html=True)
+            st.html("""
+                <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; color: #fff; font-family: sans-serif;">
+                    <h3 style="color: #ffd700; margin-top: 0; margin-bottom: 15px;">💡 How It Works</h3>
+                    
+                    <p style="margin-bottom: 8px;">
+                        <strong style="color: #ffd700;"> Logistic Regression with TF-IDF</strong><br>
+                        Enter your text below and our machine learning model will analyze the sentiment in real-time. 
+                        The model uses <strong>Logistic Regression with TF-IDF vectorization</strong> and achieves <strong>60-70% accuracy</strong>.
+                    </p>
+                    <ul style="margin-top: 0; margin-bottom: 5px; padding-left: 20px; list-style-type: disc;">
+                        <li><strong>Pros:</strong> Highly customizable; learns domain-specific vocabulary and patterns from your unique training data.</li>
+                        <li><strong>Cons:</strong> Requires an existing labeled training dataset; ignores context indicators like punctuation or emoji order.</li>
+                    </ul>
+                </div>
+                """)
+
             st.caption("Spelling mistakes may affect the accuracy of the results.")
             
             user_text = st.text_area(
