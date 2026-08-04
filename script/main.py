@@ -594,7 +594,7 @@ class ML(info_insights):
                     </p>
                     <ul style="margin-top: 0; margin-bottom: 5px; padding-left: 20px; list-style-type: disc;">
                         <li><strong>Pros:</strong> Highly customizable; learns domain-specific vocabulary and patterns from your unique training data.</li>
-                        <li><strong>Cons:</strong> Requires an existing labeled training dataset; ignores context indicators like punctuation or emoji order.</li>
+                        <li><strong>Cons:</strong> Requires an existing labeled training dataset; ignores context indicators like punctuation or emoji order; took more time to analyze as comapre to vader</li>
                     </ul>
                 </div>
                 """)
