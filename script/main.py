@@ -580,7 +580,7 @@ class ML(info_insights):
         
         st.title("🧠 AI-Powered Sentiment Analysis")
         
-        tab1,tab2 = st.tabs(["Analysis Through Machine-Learning Model ", "Analysis with Vader"])
+        tab1,tab2 = st.tabs(["Analysis with Machine-Learning Model ", "Analysis with Vader and Topic Modeling"])
         
         with tab1:
             st.markdown("""
