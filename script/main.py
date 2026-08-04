@@ -643,7 +643,6 @@ class ML(info_insights):
                         st.markdown("<hr>", unsafe_allow_html=True)
                         
                         # Results Section
-                        st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
                         
                         idx = list(classes).index(pred)
                         confidence = probs[idx]
