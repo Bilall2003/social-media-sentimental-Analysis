@@ -14,7 +14,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from sklearn.decomposition import NMF
-from sklearn.pipeline import Pipeline
+
 # --- Streamlit page config ---
 
 st.set_page_config(
@@ -739,8 +739,7 @@ class ML(info_insights):
                 if len(user_text.strip()) > 0:
                     try:
                         with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
-                            
-                            operation=Pipeline([("vader",SentimentIntensityAnalyzer())])
+                            analyzer=SentimentIntensityAnalyzer()
                             sent=analyzer.polarity_scores(user_text)['compound']
                             
                             st.success("✅ Analysis Complete!")
