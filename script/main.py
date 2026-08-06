@@ -582,7 +582,7 @@ class ML(info_insights):
         nmf_vectorizer = TfidfVectorizer(stop_words="english", min_df=5, max_df=0.60)
         tfidf_matrix = nmf_vectorizer.fit_transform(texts)
 
-        nmf_model = NMF(n_components=n_topics, random_state=42, init="nndsvd", max_iter=500)
+        nmf_model = NMF(n_components=n_topics, random_state=42, max_iter=500)
         nmf_model.fit(tfidf_matrix)
 
         feature_names = nmf_vectorizer.get_feature_names_out()
@@ -804,7 +804,7 @@ class ML(info_insights):
 
                         with st.spinner("🔄 Discovering topics with NMF... This may take a moment..."):
                             nmf_texts = self.df["text"].astype(str).tolist()
-                            nmf_vectorizer, nmf_model, topics = self.train_nmf_model(user__texts)
+                            nmf_vectorizer, nmf_model, topics = self.train_nmf_model(nmf_texts)
 
                             user_vec = nmf_vectorizer.transform([user_text])
                             user_topic_dist = nmf_model.transform(user_vec)[0]
