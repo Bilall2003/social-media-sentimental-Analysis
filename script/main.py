@@ -577,7 +577,7 @@ class info_insights(CSS):
 class ML(info_insights):
 
     @st.cache_resource(show_spinner=False)
-    def train_nmf_model(_self, texts, n_topics=2, n_top_words=8):
+    def train_nmf_model(_self, texts, n_topics=5, n_top_words=10):
         """Fit a TF-IDF + NMF topic model on the training corpus and cache it."""
         nmf_vectorizer = TfidfVectorizer(stop_words="english", min_df=5, max_df=0.60)
         tfidf_matrix = nmf_vectorizer.fit_transform(texts)
