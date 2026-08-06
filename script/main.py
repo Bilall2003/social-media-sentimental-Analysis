@@ -733,7 +733,7 @@ class ML(info_insights):
                 key="vader"
             )
 
-            but_sel2 = st.button("🚀 Analyze Sentiment", use_container_width=True,key="vaderbutton")
+            but_sel2 = st.button("🚀 Analyze", use_container_width=True,key="vaderbutton")
             
             if but_sel2:
                 if len(user_text.strip()) > 0:
