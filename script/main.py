@@ -800,7 +800,7 @@ class ML(info_insights):
 
                         # --- NMF Topic Modeling Section ---
                         st.markdown("<hr>", unsafe_allow_html=True)
-                        st.markdown("<h2 class='section-header'>🧩 Topic Modeling with NMF</h2>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>Topic Modeling with NMF</h2>", unsafe_allow_html=True)
 
                         with st.spinner("🔄 Discovering topics with NMF... This may take a moment..."):
                             nmf_texts = self.df["text"].astype(str).tolist()
@@ -829,7 +829,7 @@ class ML(info_insights):
                             """, unsafe_allow_html=True)
 
                         with col2:
-                            st.markdown("##### 📚 All Discovered Topics")
+                            st.markdown("##### 📚 All Discovered Topics",help= "The model only extracts top keywords from the text, and the topic is named by the user as per understanding.")
                             topic_rows = [
                                 {"Topic": f"Topic {t_idx + 1}", "Top Keywords": ", ".join(words)}
                                 for t_idx, words in topics.items()
