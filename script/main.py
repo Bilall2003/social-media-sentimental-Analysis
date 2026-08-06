@@ -577,7 +577,7 @@ class info_insights(CSS):
 class ML(info_insights):
 
     @st.cache_resource(show_spinner=False)
-    def train_nmf_model(_self, texts, n_topics=5, n_top_words=8):
+    def train_nmf_model(_self, texts, n_topics=2, n_top_words=8):
         """Fit a TF-IDF + NMF topic model on the training corpus and cache it."""
         nmf_vectorizer = TfidfVectorizer(stop_words="english", min_df=5, max_df=0.60)
         tfidf_matrix = nmf_vectorizer.fit_transform(texts)
@@ -588,7 +588,7 @@ class ML(info_insights):
         feature_names = nmf_vectorizer.get_feature_names_out()
         topics = {}
         for topic_idx, topic in enumerate(nmf_model.components_):
-            top_features = [feature_names[i] for i in topic.argsort()[:-n_top_words - 1:-1]]
+            top_features = [feature_names[i] for i in topic.argsort()[::-1][:n_top_words]]
             topics[topic_idx] = top_features
 
         return nmf_vectorizer, nmf_model, topics
