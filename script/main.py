@@ -575,6 +575,24 @@ class info_insights(CSS):
 
 # --- ML Class ---
 class ML(info_insights):
+
+    @st.cache_resource(show_spinner=False)
+    def train_nmf_model(_self, texts, n_topics=5, n_top_words=8):
+        """Fit a TF-IDF + NMF topic model on the training corpus and cache it."""
+        nmf_vectorizer = TfidfVectorizer(stop_words="english", min_df=5, max_df=0.60)
+        tfidf_matrix = nmf_vectorizer.fit_transform(texts)
+
+        nmf_model = NMF(n_components=n_topics, random_state=42, init="nndsvd", max_iter=500)
+        nmf_model.fit(tfidf_matrix)
+
+        feature_names = nmf_vectorizer.get_feature_names_out()
+        topics = {}
+        for topic_idx, topic in enumerate(nmf_model.components_):
+            top_features = [feature_names[i] for i in topic.argsort()[:-n_top_words - 1:-1]]
+            topics[topic_idx] = top_features
+
+        return nmf_vectorizer, nmf_model, topics
+
     def ml(self):
         self.css()
         
@@ -779,7 +797,46 @@ class ML(info_insights):
                                 - Otherwise → Neutral
                                 """
                             )
-                                                                                
+
+                        # --- NMF Topic Modeling Section ---
+                        st.markdown("<hr>", unsafe_allow_html=True)
+                        st.markdown("<h2 class='section-header'>🧩 Topic Modeling with NMF</h2>", unsafe_allow_html=True)
+
+                        with st.spinner("🔄 Discovering topics with NMF... This may take a moment..."):
+                            nmf_texts = self.df["text"].astype(str).tolist()
+                            nmf_vectorizer, nmf_model, topics = self.train_nmf_model(nmf_texts)
+
+                            user_vec = nmf_vectorizer.transform([user_text])
+                            user_topic_dist = nmf_model.transform(user_vec)[0]
+                            best_topic_idx = int(np.argmax(user_topic_dist))
+                            topic_strength = user_topic_dist[best_topic_idx]
+
+                        col1, col2 = st.columns([1, 1.5], gap="large")
+
+                        with col1:
+                            st.markdown(f"""
+                            <div class='result-card'>
+                                <div class='result-label'>Closest Matching Topic</div>
+                                <div class='result-value'>Topic {best_topic_idx + 1}</div>
+                                <p>Topic Weight: {topic_strength:.3f}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                            st.markdown(f"""
+                            <div class='info-card'>
+                                <p><strong style='color:#ffd700;'>Top Keywords:</strong><br>{", ".join(topics[best_topic_idx])}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                        with col2:
+                            st.markdown("##### 📚 All Discovered Topics")
+                            topic_rows = [
+                                {"Topic": f"Topic {t_idx + 1}", "Top Keywords": ", ".join(words)}
+                                for t_idx, words in topics.items()
+                            ]
+                            topics_df = pd.DataFrame(topic_rows)
+                            st.dataframe(topics_df, use_container_width=True, hide_index=True)
+
                     except Exception as e:
                             st.error(e)
                 else:
@@ -829,4 +886,3 @@ class App(ML):
 if __name__ == "__main__":
     obj = App()
     obj.app()
-    
