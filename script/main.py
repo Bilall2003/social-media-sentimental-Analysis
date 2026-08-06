@@ -739,7 +739,8 @@ class ML(info_insights):
                 if len(user_text.strip()) > 0:
                     try:
                         with st.spinner("🔄 Analyzing sentiment... This may take a moment..."):
-                            analyzer=SentimentIntensityAnalyzer()
+                            
+                            operation=Pipeline([("vader",SentimentIntensityAnalyzer())])
                             sent=analyzer.polarity_scores(user_text)['compound']
                             
                             st.success("✅ Analysis Complete!")
