@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🌐 Social Media Sentiment Analyzer
+# 🌐 Social Media Sentiment & Topic Analyzer
 
-### 🧠 A Streamlit-based Web App for Sentiment Analysis using Machine Learning & NLP
+### 🧠 A Streamlit-based Web App for Sentiment Analysis & Topic Discovery using Machine Learning & NLP
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -18,7 +18,7 @@
 
 ## 📖 Overview
 
-The **Social Media Sentiment Analyzer** is an interactive Streamlit web application that performs sentiment analysis on social media text data. It helps visualize, explore, and analyze the sentiments expressed in text — **positive**, **neutral**, or **negative** — through a combination of data visualization, text analytics, rule-based NLP, and machine learning.
+The **Social Media Sentiment & Topic Analyzer** is an interactive Streamlit web application that performs sentiment analysis **and** topic discovery on social media text data. It helps visualize, explore, and analyze the sentiments expressed in text — **positive**, **neutral**, or **negative** — while also surfacing **what the text is actually about**, through a combination of data visualization, text analytics, rule-based NLP, and machine learning.
 
 This project provides:
 
@@ -26,6 +26,7 @@ This project provides:
 - 🔍 A **search-based vocabulary analyzer** with word clouds and charts
 - 🤖 A **machine learning-based sentiment predictor** using TF-IDF and Logistic Regression
 - ⚡ A **VADER-powered rule-based sentiment engine** for fast, lexicon-driven analysis
+- 🧩 An **NMF-based topic modeling module** that extracts the key words/themes from any text you enter
 - 🎨 A clean, responsive Streamlit dashboard with **custom CSS design**
 
 ---
@@ -48,20 +49,27 @@ This project provides:
 - Word Cloud generation
 - Dynamic text filtering via sidebar controls
 
-</td>
-<td width="50%" valign="top">
-
 ### 🤖 ML Sentiment Analyzer
 - Custom English text input
 - TF-IDF Vectorization + Logistic Regression
 - GridSearchCV for hyperparameter tuning
 - Animated progress feedback via `st.status`
 
+</td>
+<td width="50%" valign="top">
+
 ### ⚡ VADER Sentiment Engine
 - Lexicon & rule-based sentiment scoring
 - Instant polarity scores (positive/negative/neutral/compound)
 - Great for short, informal social media text
 - Runs alongside ML model for **comparative sentiment analysis**
+
+### 🧩 NMF Topic Modeling
+- Discovers hidden topics across the full training dataset
+- Extracts the **most important words directly from your entered text**, so you can instantly see what a review or post is actually talking about
+- Down-weights filler/common words using TF-IDF, surfacing only meaningful terms
+- Shows the closest matching dataset-wide topic for extra context
+- Visualized as a ranked keyword importance chart
 
 </td>
 </tr>
@@ -71,30 +79,32 @@ This project provides:
 
 ## 🛠️ Tech Stack
 
-| Category               | Technologies Used                                  |
-| ----------------------- | --------------------------------------------------- |
-| **Frontend**            | Streamlit, HTML, CSS                                 |
-| **Data Handling**       | Pandas, NumPy                                        |
-| **Visualization**       | Seaborn, Matplotlib, WordCloud                       |
-| **Data Cleaning
-| **Machine Learning**    | scikit-learn (Logistic Regression, GridSearchCV, TF-IDF)         |
-| **NLP / Sentiment**     | **VADER (vaderSentiment)**, scikit-learn             |
-| **Utilities**           | Logging, Regex, Collections                          |
-| **Containerization**    | Docker                                               |
-| **CI/CD**               | GitHub Actions (automated build & smoke testing)     |
+| Category               | Technologies Used                                             |
+| ----------------------- | -------------------------------------------------------------- |
+| **Frontend**            | Streamlit, HTML, CSS                                           |
+| **Data Handling**       | Pandas, NumPy                                                  |
+| **Data Cleaning**       | Pandas, Regex                                                  |
+| **Visualization**       | Seaborn, Matplotlib, WordCloud                                 |
+| **Machine Learning**    | scikit-learn (Logistic Regression, GridSearchCV, TF-IDF)       |
+| **Topic Modeling**      | scikit-learn (NMF — Non-negative Matrix Factorization)         |
+| **NLP / Sentiment**     | **VADER (vaderSentiment)**, scikit-learn                       |
+| **Utilities**           | Logging, Regex, Collections                                    |
+| **Containerization**    | Docker                                                          |
+| **CI/CD**               | GitHub Actions (automated build & smoke testing)                |
 
 ---
 
-## 🧩 Why VADER + ML?
+## 🧩 Why VADER + ML + NMF?
 
 > **VADER** (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool specifically tuned for social media text — handling slang, emojis, punctuation emphasis (e.g. `"good!!!"`), and capitalization cues out of the box.
 
-Combining VADER with a trained **TF-IDF + LogR** model gives this app two complementary perspectives:
+Combining VADER with a trained **TF-IDF + Logistic Regression** model gives this app two complementary sentiment perspectives — and adding **NMF topic modeling** on top answers a different question entirely: not just *how positive/negative* is this text, but *what is it actually about*.
 
 | Approach | Strength |
 |---|---|
 | ⚡ **VADER** | Instant, no training needed, great for short/informal text |
 | 🤖 **ML (TF-IDF + Logistic Regression)** | Learns patterns from your dataset, adapts to domain-specific language |
+| 🧩 **NMF Topic Modeling** | Extracts the key words/themes from the entered text and the wider dataset, revealing subject matter rather than sentiment |
 
 ---
 
