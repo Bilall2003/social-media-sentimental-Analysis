@@ -594,9 +594,6 @@ class ML(info_insights):
         return nmf_vectorizer, nmf_model, topics
 
     def ml(self):
-        self.css()
-        
-        st.title("🧠 AI-Powered Sentiment Analysis")
         
         with tab1:
         self.css()
