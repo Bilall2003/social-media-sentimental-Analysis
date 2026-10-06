@@ -576,7 +576,7 @@ class info_insights(CSS):
 # --- ML Class ---
 class ML(info_insights):
 
-    tab1 , tab2 = st.tabs("Analysis With ML" , "Analysis with Vader and NMF")
+    tab1 , tab2 = st.tabs(["Analysis With ML" , "Analysis with Vader and NMF"])
 
     @st.cache_resource(show_spinner=False)
     def train_nmf_model(_self, texts, n_topics=5, n_top_words=10):
