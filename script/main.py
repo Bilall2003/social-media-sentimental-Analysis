@@ -576,8 +576,6 @@ class info_insights(CSS):
 # --- ML Class ---
 class ML(info_insights):
 
-    tab1 , tab2 = st.tabs(["Analysis With ML" , "Analysis with Vader and NMF"])
-
     @st.cache_resource(show_spinner=False)
     def train_nmf_model(_self, texts, n_topics=5, n_top_words=10):
         """Fit a TF-IDF + NMF topic model on the training corpus and cache it."""
@@ -596,6 +594,8 @@ class ML(info_insights):
         return nmf_vectorizer, nmf_model, topics
 
     def ml(self):
+
+        tab1 , tab2 = st.tabs(["Analysis With ML" , "Analysis with Vader and NMF"])
         
         with tab1:
             self.css()
