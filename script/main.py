@@ -705,6 +705,7 @@ class ML(info_insights):
                         logging.error(f"ML Error: {e}")
                 else:
                     st.warning("⚠️ Please enter some text to analyze!")
+                
         with tab2:
             st.html("""
                     <div style="background-color: #1e1e1e; padding: 20px; border-radius: 10px; border: 1px solid #333; color: #fff; font-family: sans-serif;">
